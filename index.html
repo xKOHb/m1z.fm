@@ -137,10 +137,10 @@ html[data-fx=off] .bg::before,html[data-fx=off] .bg::after{animation:none}
 html[data-mode=light] .vhs{display:none!important}
 .vhs canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;opacity:.9}
 .vhs .sl{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}
-.vhs .nz{position:absolute;inset:-50%;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");animation:vnz .5s steps(5) infinite}
-.vhs .tr{position:absolute;left:0;right:0;height:14%;top:-20%;background:linear-gradient(transparent,rgba(255,255,255,.07) 45%,rgba(160,110,255,.14) 55%,transparent);animation:vtr 7s linear infinite}
-.vhs .vg{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.45));animation:vfl .18s steps(2) infinite}
-@keyframes vnz{0%{transform:translate(0,0)}20%{transform:translate(-30px,18px)}40%{transform:translate(22px,-26px)}60%{transform:translate(-14px,-12px)}80%{transform:translate(28px,24px)}100%{transform:translate(0,0)}}
+.vhs .nz{position:absolute;inset:-50%;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");animation:vnz 14s linear infinite}
+.vhs .tr{position:absolute;left:0;right:0;height:18%;top:-25%;background:linear-gradient(transparent,rgba(255,255,255,.035) 45%,rgba(160,110,255,.08) 55%,transparent);animation:vtr 16s linear infinite}
+.vhs .vg{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.45))}
+@keyframes vnz{0%{transform:translate(0,0)}50%{transform:translate(-40px,30px)}100%{transform:translate(0,0)}}
 @keyframes vtr{to{top:120%}}
 @keyframes vfl{0%{opacity:.9}100%{opacity:1}}
 .vhs .osd{position:absolute;font:700 22px/1 "Courier New",ui-monospace,monospace;letter-spacing:2px;color:rgba(255,255,255,.55);text-shadow:1px 0 rgba(160,110,255,.6),-1px 0 rgba(255,60,90,.35)}
@@ -775,54 +775,76 @@ $("stage").addEventListener("click",e=>{
 applyCfg();twConnect();peerStart();
 setTheme(theme);show();
 
-/* VHS-помехи для темы «Ретро» */
+/* VHS-помехи для темы «Ретро» — плавная версия (без резких миганий) */
 (function(){
   const cv=document.getElementById("vhsc");if(!cv)return;
-  const x=cv.getContext("2d"),H=document.documentElement;let timer=null;
-  function size(){cv.width=Math.max(160,Math.round(innerWidth/4));cv.height=Math.max(100,Math.round(innerHeight/4))}
+  const x=cv.getContext("2d"),H=document.documentElement,TAU=Math.PI*2;
+  let raf=0,last=0,w=0,h=0,dots=[],streaks=[],bands=[],clk=0;
   const R=(a,b)=>a+Math.random()*(b-a);
-  function frame(){
-    const w=cv.width,h=cv.height;x.clearRect(0,0,w,h);
-    // квадратные «снежинки»
-    for(let i=0;i<Math.round(w*h/110);i++){
-      x.fillStyle="rgba(255,255,255,"+R(.15,.75)+")";
-      x.fillRect(Math.floor(R(0,w)),Math.floor(R(0,h)),1,1);
+  function mkBand(off){
+    const tw=w*2,th=14,t=document.createElement("canvas");t.width=tw;t.height=th;const c=t.getContext("2d");
+    c.fillStyle="rgba(190,170,240,.07)";c.fillRect(0,4,tw,6);
+    for(let i=0;i<tw*.9;i++){
+      const yy=Math.floor(7+R(-4,4)*Math.random()),len=R(2,22);
+      c.fillStyle=Math.random()<.08?"rgba(255,255,255,.55)":"rgba(215,208,235,"+R(.1,.38)+")";
+      c.fillRect(R(0,tw),yy,len,1);
     }
-    // редкие серые/фиолетовые штрихи
-    for(let i=0;i<Math.round(h/9);i++){
-      const y=Math.floor(R(0,h)),len=R(3,w*.14),px=R(-5,w),r=Math.random();
-      x.fillStyle=r<.7?"rgba(255,255,255,"+R(.2,.6)+")":"rgba(125,70,255,"+R(.5,.9)+")";
-      x.fillRect(px,y,len,1+(r>.93?1:0));
+    return{tex:t,y:R(h*.1,h*.9),vy:R(4,10)*(Math.random()<.5?-1:1),age:off?R(0,3):0,life:R(7,11),sx:R(8,18)*(Math.random()<.5?-1:1),o:R(0,tw)};
+  }
+  function mkDot(){return{x:Math.floor(R(0,w)),y:Math.floor(R(0,h)),a:R(.25,.7),sp:R(.5,1.6),ph:R(0,TAU),cy:0}}
+  function mkStreak(){
+    const edge=Math.random()<.25;
+    return{x:R(-5,w),y:Math.floor(edge?(Math.random()<.5?R(0,4):R(h-5,h)):R(0,h)),len:R(4,w*.13),age:R(0,3),life:R(2.2,4.5),pu:Math.random()<.3}
+  }
+  function init(){
+    w=Math.max(160,Math.round(innerWidth/4));h=Math.max(100,Math.round(innerHeight/4));cv.width=w;cv.height=h;
+    dots=Array.from({length:Math.round(w*h/130)},mkDot);
+    streaks=Array.from({length:Math.round(h/12)},mkStreak);
+    bands=[mkBand(1),mkBand(1)];bands[1].age=bands[1].life/2;
+  }
+  function draw(t,dt){
+    x.clearRect(0,0,w,h);
+    for(const d of dots){
+      const p=t*d.sp+d.ph,cy=Math.floor(p/TAU);
+      if(cy!==d.cy){d.cy=cy;d.x=Math.floor(R(0,w));d.y=Math.floor(R(0,h))}
+      const k=.5-.5*Math.cos(p);
+      x.fillStyle="rgba(255,255,255,"+(d.a*k).toFixed(3)+")";x.fillRect(d.x,d.y,1,1);
     }
-    // 1–2 полосы сбоя трекинга, прыгают по экрану
-    const nb=1+Math.floor(Math.random()*2);
-    for(let k=0;k<nb;k++){
-      const yb=Math.floor(R(h*.08,h*.95)),th=Math.floor(R(2,6));
-      for(let i=0;i<w*1.2;i++){
-        const yy=yb+Math.floor(R(-th,th)),len=R(2,26);
-        x.fillStyle=Math.random()<.18?"rgba(255,255,255,.95)":"rgba(220,215,235,"+R(.15,.6)+")";
-        x.fillRect(R(0,w),yy,len,1);
-      }
-      x.fillStyle="rgba(255,255,255,.8)";
-      for(let i=0;i<8;i++)x.fillRect(R(0,w),yb,R(6,40),1);
+    for(let i=0;i<streaks.length;i++){
+      const s=streaks[i];s.age+=dt;
+      if(s.age>s.life){streaks[i]=mkStreak();streaks[i].age=0;continue}
+      const k=Math.sin(Math.PI*s.age/s.life);
+      x.fillStyle=s.pu?"rgba(125,70,255,"+(.7*k).toFixed(3)+")":"rgba(255,255,255,"+(.4*k).toFixed(3)+")";
+      x.fillRect(s.x,s.y,s.len,1);
     }
-    // шум по верхнему и нижнему краю
-    for(const[y0,y1]of[[0,4],[h-5,h]]){
-      for(let i=0;i<60;i++){x.fillStyle="rgba(255,255,255,"+R(.2,.8)+")";x.fillRect(R(0,w),R(y0,y1),R(2,24),1)}
+    for(let i=0;i<bands.length;i++){
+      const b=bands[i];b.age+=dt;b.y+=b.vy*dt;b.o=(b.o+b.sx*dt)%(w*2);
+      if(b.age>b.life||b.y<-8||b.y>h+8){bands[i]=mkBand(0);continue}
+      const k=Math.sin(Math.PI*b.age/b.life),al=Math.min(1,k*1.6)*.6;
+      x.globalAlpha=al;
+      const o=((b.o%(w*2))+w*2)%(w*2);
+      x.drawImage(b.tex,-o,Math.round(b.y));x.drawImage(b.tex,w*2-o,Math.round(b.y));
+      x.globalAlpha=1;
     }
-    const t=document.getElementById("vhst");
-    if(t){const d=new Date();t.textContent=String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")+":"+String(d.getSeconds()).padStart(2,"0")}
+    clk+=dt;if(clk>=1){clk=0;const t=document.getElementById("vhst");
+      if(t){const d=new Date();t.textContent=String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")+":"+String(d.getSeconds()).padStart(2,"0")}}
+  }
+  function loop(ts){
+    raf=requestAnimationFrame(loop);
+    if(ts-last<33)return;
+    const dt=Math.min(.1,(ts-last)/1000||.033);last=ts;draw(ts/1000,dt);
   }
   function upd(){
     const on=H.dataset.theme==="retro"&&H.dataset.mode!=="light"&&H.dataset.fx!=="off"&&!document.hidden&&!matchMedia("(prefers-reduced-motion:reduce)").matches;
-    if(on&&!timer){size();frame();timer=setInterval(frame,130)}
-    else if(!on&&timer){clearInterval(timer);timer=null;x.clearRect(0,0,cv.width,cv.height)}
+    if(on&&!raf){init();last=0;raf=requestAnimationFrame(loop)}
+    else if(!on&&raf){cancelAnimationFrame(raf);raf=0;x.clearRect(0,0,cv.width,cv.height)}
   }
   new MutationObserver(upd).observe(H,{attributes:true,attributeFilter:["data-theme","data-mode","data-fx"]});
   document.addEventListener("visibilitychange",upd);
-  addEventListener("resize",()=>{if(timer){size();frame()}});
+  let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>{if(raf)init()},200)});
   upd();
 })();
+
 </script>
 </body>
 </html>
