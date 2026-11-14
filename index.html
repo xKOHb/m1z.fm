@@ -130,6 +130,20 @@ kbd{background:var(--in);border:1px solid var(--ln);border-radius:6px;padding:1p
 [data-theme=retro] .bg::before{inset:-60%;background:repeating-conic-gradient(at 50% 60%,rgba(255,176,46,.11) 0 7deg,transparent 7deg 14deg);animation:spin 160s linear infinite}
 [data-theme=retro] .bg::after{background:repeating-radial-gradient(circle at 50% 60%,transparent 0 60px,rgba(255,107,61,.09) 61px 64px);animation:rip 10s ease-in-out infinite alternate}
 html[data-fx=off] .bg::before,html[data-fx=off] .bg::after{animation:none}
+
+/* retro: VHS / старый телик */
+.vhs{position:absolute;inset:0;display:none;pointer-events:none;overflow:hidden}
+[data-theme=retro] .vhs{display:block}
+html[data-mode=light] .vhs{display:none!important}
+.vhs canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;opacity:.6}
+.vhs .sl{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}
+.vhs .nz{position:absolute;inset:-50%;opacity:.13;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");animation:vnz .5s steps(5) infinite}
+.vhs .tr{position:absolute;left:0;right:0;height:14%;top:-20%;background:linear-gradient(transparent,rgba(255,255,255,.07) 45%,rgba(160,110,255,.14) 55%,transparent);animation:vtr 7s linear infinite}
+.vhs .vg{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.45));animation:vfl .18s steps(2) infinite}
+@keyframes vnz{0%{transform:translate(0,0)}20%{transform:translate(-30px,18px)}40%{transform:translate(22px,-26px)}60%{transform:translate(-14px,-12px)}80%{transform:translate(28px,24px)}100%{transform:translate(0,0)}}
+@keyframes vtr{to{top:120%}}
+@keyframes vfl{0%{opacity:.9}100%{opacity:1}}
+html[data-fx=off] .vhs .nz,html[data-fx=off] .vhs .tr,html[data-fx=off] .vhs .vg{animation:none}
 /* settings, on-air, stage */
 .air{font-size:11px;font-weight:800;letter-spacing:1.5px;padding:5px 11px;border-radius:99px;border:1px solid var(--ln);color:var(--mut)}
 .air.on{color:#fff;background:#e5254a;border-color:#e5254a;animation:glow 1.3s ease-in-out infinite alternate}
@@ -269,7 +283,7 @@ html[data-mode=light] button:hover:not(:disabled){background:rgba(0,0,0,.06)}
 </style>
 </head>
 <body>
-<div class="bg"></div>
+<div class="bg"><div class="vhs"><canvas id="vhsc"></canvas><i class="sl"></i><i class="nz"></i><i class="tr"></i><i class="vg"></i></div></div>
 <header>
   <div class="logo"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>M1Z<b>.FM</b></div>
   <div class="stats" id="stats"></div>
@@ -758,6 +772,36 @@ $("stage").addEventListener("click",e=>{
 });
 applyCfg();twConnect();peerStart();
 setTheme(theme);show();
+
+/* VHS-помехи для темы «Ретро» */
+(function(){
+  const cv=document.getElementById("vhsc");if(!cv)return;
+  const x=cv.getContext("2d"),H=document.documentElement;let timer=null;
+  function size(){cv.width=Math.max(160,Math.round(innerWidth/4));cv.height=Math.max(100,Math.round(innerHeight/4))}
+  const R=(a,b)=>a+Math.random()*(b-a);
+  function frame(){
+    const w=cv.width,h=cv.height;x.clearRect(0,0,w,h);
+    for(let i=0;i<Math.round(h/5);i++){
+      const y=Math.floor(R(0,h)),len=R(4,w*.22),px=R(-10,w),r=Math.random();
+      x.fillStyle=r<.62?"rgba(255,255,255,"+R(.35,.95)+")":"rgba(125,70,255,"+R(.6,1)+")";
+      x.fillRect(px,y,len,1);
+      if(r>.9)x.fillRect(px,y,2,2+Math.floor(R(0,4)));
+    }
+    for(const[y0,y1]of[[0,5],[h-7,h]]){
+      for(let i=0;i<70;i++){x.fillStyle="rgba(255,255,255,"+R(.2,.9)+")";x.fillRect(R(0,w),R(y0,y1),R(2,28),1)}
+    }
+    if(Math.random()<.12){const y=Math.floor(R(0,h)),hh=Math.floor(R(2,6));x.fillStyle="rgba(255,255,255,.12)";x.fillRect(0,y,w,hh)}
+  }
+  function upd(){
+    const on=H.dataset.theme==="retro"&&H.dataset.mode!=="light"&&H.dataset.fx!=="off"&&!document.hidden&&!matchMedia("(prefers-reduced-motion:reduce)").matches;
+    if(on&&!timer){size();frame();timer=setInterval(frame,130)}
+    else if(!on&&timer){clearInterval(timer);timer=null;x.clearRect(0,0,cv.width,cv.height)}
+  }
+  new MutationObserver(upd).observe(H,{attributes:true,attributeFilter:["data-theme","data-mode","data-fx"]});
+  document.addEventListener("visibilitychange",upd);
+  addEventListener("resize",()=>{if(timer){size();frame()}});
+  upd();
+})();
 </script>
 </body>
 </html>
