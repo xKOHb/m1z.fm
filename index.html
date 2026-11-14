@@ -116,7 +116,7 @@ kbd{background:var(--in);border:1px solid var(--ln);border-radius:6px;padding:1p
 /* new themes */
 [data-theme=sakura]{--bg:#1d0f18;--card:rgba(48,22,38,.7);--tx:#ffeef5;--mut:#d6a3bb;--ac:#ff7eb6;--ac2:#ffc2dd}
 [data-theme=matrix]{--bg:#020a05;--card:rgba(2,22,11,.74);--tx:#d6ffe4;--mut:#5fae7e;--ac:#00ff7f;--ac2:#b6ff5e}
-[data-theme=retro]{--bg:#241407;--card:rgba(54,32,12,.72);--tx:#fff1d6;--mut:#c9a373;--ac:#ffb02e;--ac2:#ff6b3d}
+[data-theme=retro]{--bg:#060508;--card:rgba(16,13,22,.78);--tx:#f3f0f8;--mut:#9d98ab;--ac:#b79cff;--ac2:#8c6bff}
 [data-theme=sakura] .bg{background:radial-gradient(800px at 80% 0,rgba(255,126,182,.25),transparent),radial-gradient(600px at 0 100%,rgba(255,194,221,.12),transparent),var(--bg)}
 [data-theme=sakura] .bg::before{background-image:radial-gradient(ellipse 7px 4px at 30px 40px,rgba(255,182,213,.9),transparent 90%),radial-gradient(ellipse 5px 3px at 140px 120px,rgba(255,150,190,.8),transparent 90%),radial-gradient(ellipse 8px 5px at 220px 20px,rgba(255,210,230,.85),transparent 90%),radial-gradient(ellipse 5px 3px at 90px 200px,rgba(255,170,200,.7),transparent 90%);background-size:260px 260px;animation:petal 14s linear infinite}
 [data-theme=sakura] .bg::after{background-image:radial-gradient(ellipse 10px 6px at 60px 70px,rgba(255,190,220,.7),transparent 90%),radial-gradient(ellipse 6px 4px at 250px 180px,rgba(255,140,185,.7),transparent 90%),radial-gradient(ellipse 8px 5px at 160px 300px,rgba(255,215,232,.7),transparent 90%);background-size:380px 380px;animation:petal2 24s linear infinite}
@@ -126,23 +126,25 @@ kbd{background:var(--in);border:1px solid var(--ln);border-radius:6px;padding:1p
 [data-theme=matrix] .bg::before{background:repeating-linear-gradient(0deg,rgba(0,255,127,.55) 0 10px,transparent 10px 28px);-webkit-mask-image:repeating-linear-gradient(90deg,#000 0 2px,transparent 2px 22px);mask-image:repeating-linear-gradient(90deg,#000 0 2px,transparent 2px 22px);animation:rain 2.4s linear infinite;opacity:.55}
 [data-theme=matrix] .bg::after{background:repeating-linear-gradient(0deg,rgba(182,255,94,.5) 0 6px,transparent 6px 40px);-webkit-mask-image:repeating-linear-gradient(90deg,transparent 0 9px,#000 9px 11px,transparent 11px 31px);mask-image:repeating-linear-gradient(90deg,transparent 0 9px,#000 9px 11px,transparent 11px 31px);animation:rain 4.1s linear infinite;opacity:.3}
 @keyframes rain{to{background-position:0 280px}}
-[data-theme=retro] .bg{background:radial-gradient(circle at 50% 110%,rgba(255,107,61,.5),transparent 55%),var(--bg)}
-[data-theme=retro] .bg::before{inset:-60%;background:repeating-conic-gradient(at 50% 60%,rgba(255,176,46,.11) 0 7deg,transparent 7deg 14deg);animation:spin 160s linear infinite}
-[data-theme=retro] .bg::after{background:repeating-radial-gradient(circle at 50% 60%,transparent 0 60px,rgba(255,107,61,.09) 61px 64px);animation:rip 10s ease-in-out infinite alternate}
+[data-theme=retro] .bg{background:radial-gradient(ellipse at 50% 40%,#140d1f,#060508 75%)}
+[data-theme=retro] .bg::before{display:none}
+[data-theme=retro] .bg::after{display:none}
 html[data-fx=off] .bg::before,html[data-fx=off] .bg::after{animation:none}
 
 /* retro: VHS / старый телик */
 .vhs{position:absolute;inset:0;display:none;pointer-events:none;overflow:hidden}
 [data-theme=retro] .vhs{display:block}
 html[data-mode=light] .vhs{display:none!important}
-.vhs canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;opacity:.6}
-.vhs .sl{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}
-.vhs .nz{position:absolute;inset:-50%;opacity:.13;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");animation:vnz .5s steps(5) infinite}
+.vhs canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;opacity:.9}
+.vhs .sl{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}
+.vhs .nz{position:absolute;inset:-50%;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");animation:vnz .5s steps(5) infinite}
 .vhs .tr{position:absolute;left:0;right:0;height:14%;top:-20%;background:linear-gradient(transparent,rgba(255,255,255,.07) 45%,rgba(160,110,255,.14) 55%,transparent);animation:vtr 7s linear infinite}
 .vhs .vg{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.45));animation:vfl .18s steps(2) infinite}
 @keyframes vnz{0%{transform:translate(0,0)}20%{transform:translate(-30px,18px)}40%{transform:translate(22px,-26px)}60%{transform:translate(-14px,-12px)}80%{transform:translate(28px,24px)}100%{transform:translate(0,0)}}
 @keyframes vtr{to{top:120%}}
 @keyframes vfl{0%{opacity:.9}100%{opacity:1}}
+.vhs .osd{position:absolute;font:700 22px/1 "Courier New",ui-monospace,monospace;letter-spacing:2px;color:rgba(255,255,255,.55);text-shadow:1px 0 rgba(160,110,255,.6),-1px 0 rgba(255,60,90,.35)}
+.vhs .osd.bl{left:24px;bottom:22px;line-height:1.5}.vhs .osd.br{right:24px;bottom:22px}
 html[data-fx=off] .vhs .nz,html[data-fx=off] .vhs .tr,html[data-fx=off] .vhs .vg{animation:none}
 /* settings, on-air, stage */
 .air{font-size:11px;font-weight:800;letter-spacing:1.5px;padding:5px 11px;border-radius:99px;border:1px solid var(--ln);color:var(--mut)}
@@ -283,7 +285,7 @@ html[data-mode=light] button:hover:not(:disabled){background:rgba(0,0,0,.06)}
 </style>
 </head>
 <body>
-<div class="bg"><div class="vhs"><canvas id="vhsc"></canvas><i class="sl"></i><i class="nz"></i><i class="tr"></i><i class="vg"></i></div></div>
+<div class="bg"><div class="vhs"><canvas id="vhsc"></canvas><i class="sl"></i><i class="nz"></i><i class="tr"></i><i class="vg"></i><div class="osd bl"><span>PLAY &#9654;</span><br><span id="vhst">00:00</span></div><div class="osd br">VHS</div></div></div>
 <header>
   <div class="logo"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>M1Z<b>.FM</b></div>
   <div class="stats" id="stats"></div>
@@ -387,7 +389,7 @@ const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&g
 const isUrl=s=>/^https?:\/\//i.test(s);
 let vol=ls.get("m1z_vol")!==null?+ls.get("m1z_vol"):50,muted=false,player=null,ytReady=false,pending=null,playing=false;
 const ytId=u=>((u||"").match(/(?:youtu\.be\/|[?&]v=|embed\/|shorts\/)([\w-]{11})/)||[])[1];
-const THEMES=[["hamster","Хомяк","linear-gradient(135deg,#17120f,#ff8a3d)"],["neon","Неон","linear-gradient(135deg,#2a0a5e,#ff2bd6 55%,#00e5ff)"],["space","Космос","linear-gradient(135deg,#050816,#7c9cff,#c39bff)"],["lagoon","Лагуна","linear-gradient(135deg,#06201f,#2fe3b0,#6ad6ff)"],["sakura","Сакура","linear-gradient(135deg,#1d0f18,#ff7eb6,#ffc2dd)"],["matrix","Матрица","linear-gradient(135deg,#020a05,#00ff7f)"],["retro","Ретро","linear-gradient(135deg,#241407,#ffb02e,#ff6b3d)"],["volcano","Вулкан","linear-gradient(135deg,#1a0707,#ff3b3b 60%,#ff9a8a)"],["platinum","Платина","linear-gradient(135deg,#0b0c10,#e4e8f0 70%,#8a94a8)"],["stage","Сцена","linear-gradient(135deg,#100d04,#ffe11a 60%,#fff59a)"]];
+const THEMES=[["hamster","Хомяк","linear-gradient(135deg,#17120f,#ff8a3d)"],["neon","Неон","linear-gradient(135deg,#2a0a5e,#ff2bd6 55%,#00e5ff)"],["space","Космос","linear-gradient(135deg,#050816,#7c9cff,#c39bff)"],["lagoon","Лагуна","linear-gradient(135deg,#06201f,#2fe3b0,#6ad6ff)"],["sakura","Сакура","linear-gradient(135deg,#1d0f18,#ff7eb6,#ffc2dd)"],["matrix","Матрица","linear-gradient(135deg,#020a05,#00ff7f)"],["retro","Ретро VHS","linear-gradient(135deg,#060508,#2a1a46,#b79cff)"],["volcano","Вулкан","linear-gradient(135deg,#1a0707,#ff3b3b 60%,#ff9a8a)"],["platinum","Платина","linear-gradient(135deg,#0b0c10,#e4e8f0 70%,#8a94a8)"],["stage","Сцена","linear-gradient(135deg,#100d04,#ffe11a 60%,#fff59a)"]];
 let theme=ls.get("m1z_theme")||"hamster";
 function setTheme(t){theme=t;document.documentElement.dataset.theme=t;ls.set("m1z_theme",t);bcast();document.querySelectorAll(".tc").forEach(b=>b.classList.toggle("on",b.dataset.t===t))}
 function toast(t){const o=$("toast");o.textContent=t;o.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>o.classList.remove("show"),1600)}
@@ -624,7 +626,7 @@ $("t-j").onclick=()=>window.SFX&&SFX.jingle();$("t-a").onclick=()=>window.SFX&&S
 const plItems=()=>[S.current,...S.history].filter(x=>x&&x.pl);
 const splitN=x=>{const n=plName(x),m=n.match(/^(.+?)\s[–-]\s(.+)$/);return isUrl(n)?["",n]:m?[m[1],m[2]]:["",n]};
 function fit(g,t,w){if(g.measureText(t).width<=w)return t;while(t.length>1&&g.measureText(t+"…").width>w)t=t.slice(0,-1);return t+"…"}
-const STORY_PAL={hamster:["#ff8a3d","#ffc46b","#18110c"],neon:["#ff2bd6","#00e5ff","#1a0938"],space:["#7c9cff","#c39bff","#0a102a"],lagoon:["#2fe3b0","#6ad6ff","#062c2a"],sakura:["#ff7eb6","#ffc2dd","#2c1322"],matrix:["#00ff7f","#b6ff5e","#02140a"],retro:["#ffb02e","#ff6b3d","#321d0a"],volcano:["#ff3b3b","#ff9a8a","#280a0a"],platinum:["#e4e8f0","#b4bdd0","#14161e"],stage:["#ffe11a","#fff59a","#221c06"]};
+const STORY_PAL={hamster:["#ff8a3d","#ffc46b","#18110c"],neon:["#ff2bd6","#00e5ff","#1a0938"],space:["#7c9cff","#c39bff","#0a102a"],lagoon:["#2fe3b0","#6ad6ff","#062c2a"],sakura:["#ff7eb6","#ffc2dd","#2c1322"],matrix:["#00ff7f","#b6ff5e","#02140a"],retro:["#b79cff","#8c6bff","#0e0a16"],volcano:["#ff3b3b","#ff9a8a","#280a0a"],platinum:["#e4e8f0","#b4bdd0","#14161e"],stage:["#ffe11a","#fff59a","#221c06"]};
 let photoImg=null,storyArgs=null,sumTag="";
 function loadPhoto(){const u=ls.get("m1z_photo");if(!u){photoImg=null;return}const im=new Image();im.onload=()=>{photoImg=im;if(storyArgs)drawStory(...storyArgs)};im.src=u}
 function drawStory(top,avg,n,all,cur){
@@ -781,16 +783,35 @@ setTheme(theme);show();
   const R=(a,b)=>a+Math.random()*(b-a);
   function frame(){
     const w=cv.width,h=cv.height;x.clearRect(0,0,w,h);
-    for(let i=0;i<Math.round(h/5);i++){
-      const y=Math.floor(R(0,h)),len=R(4,w*.22),px=R(-10,w),r=Math.random();
-      x.fillStyle=r<.62?"rgba(255,255,255,"+R(.35,.95)+")":"rgba(125,70,255,"+R(.6,1)+")";
-      x.fillRect(px,y,len,1);
-      if(r>.9)x.fillRect(px,y,2,2+Math.floor(R(0,4)));
+    // квадратные «снежинки»
+    for(let i=0;i<Math.round(w*h/110);i++){
+      x.fillStyle="rgba(255,255,255,"+R(.15,.75)+")";
+      x.fillRect(Math.floor(R(0,w)),Math.floor(R(0,h)),1,1);
     }
-    for(const[y0,y1]of[[0,5],[h-7,h]]){
-      for(let i=0;i<70;i++){x.fillStyle="rgba(255,255,255,"+R(.2,.9)+")";x.fillRect(R(0,w),R(y0,y1),R(2,28),1)}
+    // редкие серые/фиолетовые штрихи
+    for(let i=0;i<Math.round(h/9);i++){
+      const y=Math.floor(R(0,h)),len=R(3,w*.14),px=R(-5,w),r=Math.random();
+      x.fillStyle=r<.7?"rgba(255,255,255,"+R(.2,.6)+")":"rgba(125,70,255,"+R(.5,.9)+")";
+      x.fillRect(px,y,len,1+(r>.93?1:0));
     }
-    if(Math.random()<.12){const y=Math.floor(R(0,h)),hh=Math.floor(R(2,6));x.fillStyle="rgba(255,255,255,.12)";x.fillRect(0,y,w,hh)}
+    // 1–2 полосы сбоя трекинга, прыгают по экрану
+    const nb=1+Math.floor(Math.random()*2);
+    for(let k=0;k<nb;k++){
+      const yb=Math.floor(R(h*.08,h*.95)),th=Math.floor(R(2,6));
+      for(let i=0;i<w*1.2;i++){
+        const yy=yb+Math.floor(R(-th,th)),len=R(2,26);
+        x.fillStyle=Math.random()<.18?"rgba(255,255,255,.95)":"rgba(220,215,235,"+R(.15,.6)+")";
+        x.fillRect(R(0,w),yy,len,1);
+      }
+      x.fillStyle="rgba(255,255,255,.8)";
+      for(let i=0;i<8;i++)x.fillRect(R(0,w),yb,R(6,40),1);
+    }
+    // шум по верхнему и нижнему краю
+    for(const[y0,y1]of[[0,4],[h-5,h]]){
+      for(let i=0;i<60;i++){x.fillStyle="rgba(255,255,255,"+R(.2,.8)+")";x.fillRect(R(0,w),R(y0,y1),R(2,24),1)}
+    }
+    const t=document.getElementById("vhst");
+    if(t){const d=new Date();t.textContent=String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")+":"+String(d.getSeconds()).padStart(2,"0")}
   }
   function upd(){
     const on=H.dataset.theme==="retro"&&H.dataset.mode!=="light"&&H.dataset.fx!=="off"&&!document.hidden&&!matchMedia("(prefers-reduced-motion:reduce)").matches;
