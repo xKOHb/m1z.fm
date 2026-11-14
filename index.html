@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="hamster">
+<html lang="ru" data-theme="m1z">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -25,10 +25,11 @@ html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
 .bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:var(--bg);transition:background .6s}
 .bg::before,.bg::after{content:"";position:absolute;inset:0}
-/* hamster: seeds + warm glow */
-[data-theme=hamster] .bg{background:radial-gradient(700px at 90% -5%,rgba(255,138,61,.28),transparent),radial-gradient(600px at 0 100%,rgba(255,196,107,.14),transparent),var(--bg)}
-[data-theme=hamster] .bg::before{background-image:radial-gradient(circle,rgba(255,170,90,.2) 2.5px,transparent 3px),radial-gradient(circle,rgba(255,196,107,.12) 1.5px,transparent 2px);background-size:44px 44px,44px 44px;background-position:0 0,22px 22px;animation:drift 40s linear infinite}
-[data-theme=hamster] .bg::after{background:radial-gradient(400px at 20% 30%,rgba(255,138,61,.1),transparent);animation:pulse 8s ease-in-out infinite alternate}
+/* M1z: тёмная, дотерская — угли, золото и красный */
+[data-theme=m1z]{--bg:#09080b;--card:rgba(21,17,22,.78);--tx:#f2ece4;--mut:#a89c92;--ac:#e8b04a;--ac2:#e0332f}
+[data-theme=m1z] .bg{background:radial-gradient(900px 520px at 10% -10%,rgba(224,51,47,.24),transparent 70%),radial-gradient(800px 420px at 100% 108%,rgba(232,176,74,.13),transparent 70%),linear-gradient(#0d0b10,#070709)}
+[data-theme=m1z] .bg::before{background-image:radial-gradient(circle,rgba(255,140,70,.9) 1.6px,transparent 2.6px),radial-gradient(circle,rgba(232,176,74,.8) 1.2px,transparent 2.2px),radial-gradient(circle,rgba(224,51,47,.85) 1px,transparent 2px);background-size:150px 200px,100px 140px,220px 270px;background-position:0 0,40px 60px,90px 20px;animation:ember 18s linear infinite;-webkit-mask-image:linear-gradient(to top,#000 5%,transparent 85%);mask-image:linear-gradient(to top,#000 5%,transparent 85%)}
+[data-theme=m1z] .bg::after{inset:-60%;background:repeating-conic-gradient(at 50% 50%,rgba(232,176,74,.07) 0 1.5deg,transparent 1.5deg 12deg);-webkit-mask-image:radial-gradient(circle,#000 8%,transparent 62%);mask-image:radial-gradient(circle,#000 8%,transparent 62%);animation:spin 240s linear infinite}
 @keyframes drift{to{background-position:88px 88px,110px 110px}}
 @keyframes pulse{from{opacity:.4}to{opacity:1}}
 /* neon: synthwave grid + sun */
@@ -137,7 +138,7 @@ html[data-fx=off] .bg::before,html[data-fx=off] .bg::after{animation:none}
 html[data-mode=light] .vhs{display:none!important}
 .vhs canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;opacity:.9}
 .vhs .sl{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}
-.vhs .nz{position:absolute;inset:-50%;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");animation:vnz 14s linear infinite}
+.vhs .nz{position:absolute;inset:-50%;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");animation:vnz 6s linear infinite}
 .vhs .tr{position:absolute;left:0;right:0;height:18%;top:-25%;background:linear-gradient(transparent,rgba(255,255,255,.035) 45%,rgba(160,110,255,.08) 55%,transparent);animation:vtr 16s linear infinite}
 .vhs .vg{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.45))}
 @keyframes vnz{0%{transform:translate(0,0)}50%{transform:translate(-40px,30px)}100%{transform:translate(0,0)}}
@@ -389,8 +390,8 @@ const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&g
 const isUrl=s=>/^https?:\/\//i.test(s);
 let vol=ls.get("m1z_vol")!==null?+ls.get("m1z_vol"):50,muted=false,player=null,ytReady=false,pending=null,playing=false;
 const ytId=u=>((u||"").match(/(?:youtu\.be\/|[?&]v=|embed\/|shorts\/)([\w-]{11})/)||[])[1];
-const THEMES=[["hamster","Хомяк","linear-gradient(135deg,#17120f,#ff8a3d)"],["neon","Неон","linear-gradient(135deg,#2a0a5e,#ff2bd6 55%,#00e5ff)"],["space","Космос","linear-gradient(135deg,#050816,#7c9cff,#c39bff)"],["lagoon","Лагуна","linear-gradient(135deg,#06201f,#2fe3b0,#6ad6ff)"],["sakura","Сакура","linear-gradient(135deg,#1d0f18,#ff7eb6,#ffc2dd)"],["matrix","Матрица","linear-gradient(135deg,#020a05,#00ff7f)"],["retro","Ретро VHS","linear-gradient(135deg,#060508,#2a1a46,#b79cff)"],["volcano","Вулкан","linear-gradient(135deg,#1a0707,#ff3b3b 60%,#ff9a8a)"],["platinum","Платина","linear-gradient(135deg,#0b0c10,#e4e8f0 70%,#8a94a8)"],["stage","Сцена","linear-gradient(135deg,#100d04,#ffe11a 60%,#fff59a)"]];
-let theme=ls.get("m1z_theme")||"hamster";
+const THEMES=[["m1z","M1z","linear-gradient(135deg,#0d0b10,#e0332f,#e8b04a)"],["neon","Неон","linear-gradient(135deg,#2a0a5e,#ff2bd6 55%,#00e5ff)"],["space","Космос","linear-gradient(135deg,#050816,#7c9cff,#c39bff)"],["lagoon","Лагуна","linear-gradient(135deg,#06201f,#2fe3b0,#6ad6ff)"],["sakura","Сакура","linear-gradient(135deg,#1d0f18,#ff7eb6,#ffc2dd)"],["matrix","Матрица","linear-gradient(135deg,#020a05,#00ff7f)"],["retro","Ретро VHS","linear-gradient(135deg,#060508,#2a1a46,#b79cff)"],["volcano","Вулкан","linear-gradient(135deg,#1a0707,#ff3b3b 60%,#ff9a8a)"],["platinum","Платина","linear-gradient(135deg,#0b0c10,#e4e8f0 70%,#8a94a8)"],["stage","Сцена","linear-gradient(135deg,#100d04,#ffe11a 60%,#fff59a)"]];
+let theme=ls.get("m1z_theme")||"m1z";if(!THEMES.some(t=>t[0]===theme))theme="m1z";
 function setTheme(t){theme=t;document.documentElement.dataset.theme=t;ls.set("m1z_theme",t);bcast();document.querySelectorAll(".tc").forEach(b=>b.classList.toggle("on",b.dataset.t===t))}
 function toast(t){const o=$("toast");o.textContent=t;o.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>o.classList.remove("show"),1600)}
 /* helpers: дубли, фильтры, звук, слепой режим */
@@ -626,7 +627,7 @@ $("t-j").onclick=()=>window.SFX&&SFX.jingle();$("t-a").onclick=()=>window.SFX&&S
 const plItems=()=>[S.current,...S.history].filter(x=>x&&x.pl);
 const splitN=x=>{const n=plName(x),m=n.match(/^(.+?)\s[–-]\s(.+)$/);return isUrl(n)?["",n]:m?[m[1],m[2]]:["",n]};
 function fit(g,t,w){if(g.measureText(t).width<=w)return t;while(t.length>1&&g.measureText(t+"…").width>w)t=t.slice(0,-1);return t+"…"}
-const STORY_PAL={hamster:["#ff8a3d","#ffc46b","#18110c"],neon:["#ff2bd6","#00e5ff","#1a0938"],space:["#7c9cff","#c39bff","#0a102a"],lagoon:["#2fe3b0","#6ad6ff","#062c2a"],sakura:["#ff7eb6","#ffc2dd","#2c1322"],matrix:["#00ff7f","#b6ff5e","#02140a"],retro:["#b79cff","#8c6bff","#0e0a16"],volcano:["#ff3b3b","#ff9a8a","#280a0a"],platinum:["#e4e8f0","#b4bdd0","#14161e"],stage:["#ffe11a","#fff59a","#221c06"]};
+const STORY_PAL={m1z:["#e8b04a","#e0332f","#0d0b10"],neon:["#ff2bd6","#00e5ff","#1a0938"],space:["#7c9cff","#c39bff","#0a102a"],lagoon:["#2fe3b0","#6ad6ff","#062c2a"],sakura:["#ff7eb6","#ffc2dd","#2c1322"],matrix:["#00ff7f","#b6ff5e","#02140a"],retro:["#b79cff","#8c6bff","#0e0a16"],volcano:["#ff3b3b","#ff9a8a","#280a0a"],platinum:["#e4e8f0","#b4bdd0","#14161e"],stage:["#ffe11a","#fff59a","#221c06"]};
 let photoImg=null,storyArgs=null,sumTag="";
 function loadPhoto(){const u=ls.get("m1z_photo");if(!u){photoImg=null;return}const im=new Image();im.onload=()=>{photoImg=im;if(storyArgs)drawStory(...storyArgs)};im.src=u}
 function drawStory(top,avg,n,all,cur){
@@ -786,15 +787,15 @@ setTheme(theme);show();
     c.fillStyle="rgba(190,170,240,.07)";c.fillRect(0,4,tw,6);
     for(let i=0;i<tw*.9;i++){
       const yy=Math.floor(7+R(-4,4)*Math.random()),len=R(2,22);
-      c.fillStyle=Math.random()<.08?"rgba(255,255,255,.55)":"rgba(215,208,235,"+R(.1,.38)+")";
+      c.fillStyle=Math.random()<.14?"rgba(255,255,255,.55)":"rgba(215,208,235,"+R(.1,.38)+")";
       c.fillRect(R(0,tw),yy,len,1);
     }
-    return{tex:t,y:R(h*.1,h*.9),vy:R(4,10)*(Math.random()<.5?-1:1),age:off?R(0,3):0,life:R(7,11),sx:R(8,18)*(Math.random()<.5?-1:1),o:R(0,tw)};
+    return{tex:t,y:R(h*.1,h*.9),vy:R(8,18)*(Math.random()<.5?-1:1),age:off?R(0,3):0,life:R(4,7),sx:R(20,40)*(Math.random()<.5?-1:1),o:R(0,tw)};
   }
-  function mkDot(){return{x:Math.floor(R(0,w)),y:Math.floor(R(0,h)),a:R(.25,.7),sp:R(.5,1.6),ph:R(0,TAU),cy:0}}
+  function mkDot(){return{x:Math.floor(R(0,w)),y:Math.floor(R(0,h)),a:R(.25,.7),sp:R(1,3),ph:R(0,TAU),cy:0}}
   function mkStreak(){
     const edge=Math.random()<.25;
-    return{x:R(-5,w),y:Math.floor(edge?(Math.random()<.5?R(0,4):R(h-5,h)):R(0,h)),len:R(4,w*.13),age:R(0,3),life:R(2.2,4.5),pu:Math.random()<.3}
+    return{x:R(-5,w),y:Math.floor(edge?(Math.random()<.5?R(0,4):R(h-5,h)):R(0,h)),len:R(4,w*.13),age:R(0,3),life:R(1,2.5),pu:Math.random()<.3}
   }
   function init(){
     w=Math.max(160,Math.round(innerWidth/4));h=Math.max(100,Math.round(innerHeight/4));cv.width=w;cv.height=h;
@@ -820,7 +821,7 @@ setTheme(theme);show();
     for(let i=0;i<bands.length;i++){
       const b=bands[i];b.age+=dt;b.y+=b.vy*dt;b.o=(b.o+b.sx*dt)%(w*2);
       if(b.age>b.life||b.y<-8||b.y>h+8){bands[i]=mkBand(0);continue}
-      const k=Math.sin(Math.PI*b.age/b.life),al=Math.min(1,k*1.6)*.6;
+      const k=Math.sin(Math.PI*b.age/b.life),al=Math.min(1,k*1.6)*.8;
       x.globalAlpha=al;
       const o=((b.o%(w*2))+w*2)%(w*2);
       x.drawImage(b.tex,-o,Math.round(b.y));x.drawImage(b.tex,w*2-o,Math.round(b.y));
@@ -831,7 +832,7 @@ setTheme(theme);show();
   }
   function loop(ts){
     raf=requestAnimationFrame(loop);
-    if(ts-last<33)return;
+    if(ts-last<41)return;
     const dt=Math.min(.1,(ts-last)/1000||.033);last=ts;draw(ts/1000,dt);
   }
   function upd(){

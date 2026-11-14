@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="hamster">
+<html lang="ru" data-theme="m1z">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,6 +11,7 @@
 [data-theme=lagoon]{--ac:#2fe3b0;--ac2:#6ad6ff;--card:rgba(6,44,42,.88)}
 [data-theme=sakura]{--ac:#ff7eb6;--ac2:#ffc2dd;--card:rgba(44,19,34,.88)}
 [data-theme=matrix]{--ac:#00ff7f;--ac2:#b6ff5e;--card:rgba(2,20,10,.9)}
+[data-theme=m1z]{--ac:#e8b04a;--ac2:#e0332f;--card:rgba(21,17,22,.9)}
 [data-theme=retro]{--ac:#b79cff;--ac2:#8c6bff;--card:rgba(16,13,22,.9)}
 [data-theme=volcano]{--ac:#ff3b3b;--ac2:#ff9a8a;--card:rgba(40,10,10,.88)}
 [data-theme=platinum]{--ac:#e4e8f0;--ac2:#b4bdd0;--card:rgba(20,22,30,.88)}
@@ -191,7 +192,7 @@ function confetti(){const cs=["#ff8a3d","#ffd23f","#fff","#ff2bd6","#00e5ff","#3
 function upd(){
   const S=remote?{current:remote.current,queue:remote.queue}:rd(),c=S.current,cf=remote?{blind:remote.blind,snd:remote.snd}:rc();CF=cf;
   if(remote&&typeof remote.sndVol==="number")window.SFX_VOL=remote.sndVol;
-  document.documentElement.dataset.theme=remote?remote.theme||"hamster":localStorage.getItem("m1z_theme")||"hamster";
+  document.documentElement.dataset.theme=remote?remote.theme||"m1z":localStorage.getItem("m1z_theme")||"m1z";
   const card=$("card"),id=c?c.id:null,r=c&&c.rating,hide=!!(cf.blind&&c&&!r);
   let name=c?(c.name||c.title||c.text||""):"";if(/^https?:/i.test(name)){try{name=new URL(name).hostname.replace(/^www\./,"")+" · трек по ссылке"}catch(e){}}
   if(id!==last.id){
