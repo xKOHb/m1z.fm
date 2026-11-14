@@ -343,7 +343,7 @@ html[data-mode=light] button:hover:not(:disabled){background:rgba(0,0,0,.06)}
   <div class="fld"><label for="c-clean">Чистить названия<small>убирает Official Video, Lyrics и т. п.</small></label><input type="checkbox" id="c-clean"></div>
   <div class="fld"><label for="c-copy">Копировать как</label><select id="c-copy"><option value="names">Исполнитель – Название</option><option value="links">Ссылки</option></select></div>
   <h3>Данные</h3>
-  <div class="row"><button id="d-exp">⬇ Экспорт</button><button id="d-imp">⬆ Импорт</button><button id="clr">🗑 Новый эфир</button><input type="file" id="d-file" accept="application/json" hidden></div>
+  <div class="row"><button id="d-exp">⬇ Экспорт</button><button id="d-imp">⬆ Импорт</button><button id="clr">🗑 Новый эфир</button><button id="clr-all" title="Очередь, история, архив и итоги — всё в ноль. Настройки и тема останутся.">🧨 Очистить всё</button><input type="file" id="d-file" accept="application/json" hidden></div>
 </div></div>
 <div class="modal" id="smodal"><div class="sheet wide">
   <div class="shh">Итоги вечера <button id="sclose" class="ghost">✕</button></div>
@@ -500,6 +500,11 @@ $("clr").onclick=()=>{if(confirm("Очистить очередь и истор�
   archSave();
   S=fixS();save();show()}};
 
+function clearAll(){
+  if(!confirm("Очистить ВСЁ?\nОчередь, «На проверке», историю, текущий трек и архив эфиров («За 30 дней» / «За всё время»). Настройки, тема и фото ведущей останутся. Это нельзя отменить."))return false;
+  ls.set("m1z_arch","[]");votes={};brk={on:false,until:0};brkUi();
+  S=fixS();save();show();toast("Всё очищено ✓");return true}
+$("clr-all").onclick=()=>{if(clearAll())$("modal").classList.remove("open")};
 const CFGK="m1z_cfg";
 let cfg={chan:"",bot:false,cmds:"!заказ,!sr,!order",maxq:2,cd:30,clean:true,copy:"names",fxBg:true,fxBurst:true,ovq:true,snd:"panel",blind:false,banNicks:"",banWords:"",conf:true,sndVol:25,room:"",maxMin:8,lenSkip:true,compact:false,mode:"dark"};
 try{Object.assign(cfg,JSON.parse(ls.get(CFGK)||"{}"))}catch(e){}
@@ -575,9 +580,9 @@ $("tgrid").onclick=e=>{const b=e.target.closest(".tc");if(b)setTheme(b.dataset.t
 $("gear").onclick=()=>$("modal").classList.add("open");
 $("mclose").onclick=()=>$("modal").classList.remove("open");
 $("modal").onclick=e=>{if(e.target===$("modal"))$("modal").classList.remove("open")};
-const ovLink=()=>location.origin+"/overlay.html?room="+cfg.room+(cfg.ovq?"":"&q=0");
+const ovLink=()=>location.origin+"/overlay-m1z.html?room="+cfg.room+(cfg.ovq?"":"&q=0");
 $("ov-copy").onclick=async()=>{try{await navigator.clipboard.writeText(ovLink());toast("Ссылка скопирована ✓")}catch(e){toast(ovLink())}};
-$("ov-win").onclick=()=>window.open("/overlay.html?bg=green&room="+cfg.room+(cfg.ovq?"":"&q=0"),"m1z_overlay","width=980,height=420");
+$("ov-win").onclick=()=>window.open("/overlay-m1z.html?bg=green&room="+cfg.room+(cfg.ovq?"":"&q=0"),"m1z_overlay","width=980,height=420");
 $("d-exp").onclick=()=>{const b=new Blob([JSON.stringify({S,cfg:(({ytKey,...r})=>r)(cfg),arch:(()=>{try{return JSON.parse(ls.get("m1z_arch")||"[]")}catch(e){return[]}})()},null,1)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="m1z-backup.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
 $("d-imp").onclick=()=>$("d-file").click();
 $("d-file").onchange=async e=>{try{const j=JSON.parse(await e.target.files[0].text());if(j.S){S=fixS(j.S);save()}if(Array.isArray(j.arch)&&j.arch.length)ls.set("m1z_arch",JSON.stringify(j.arch.slice(-60)));if(j.cfg){Object.assign(cfg,j.cfg);cfgSave();location.reload();return}show();toast("Импортировано ✓")}catch(x){toast("Не удалось прочитать файл")}};
@@ -662,7 +667,7 @@ function openAll(days){
   const top=tr.map((x,i)=>[x,i]).sort((a,b)=>b[0].r-a[0].r||b[1]-a[1]).slice(0,15).map(a=>a[0]);
   const m={};tr.forEach(x=>{(m[x.nick]=m[x.nick]||{n:0,s:0}).n++;m[x.nick].s+=x.r});
   const fav=Object.entries(m).filter(a=>a[1].n>=2).map(([k,v])=>[k,v.n,v.s/v.n]).sort((a,b)=>b[2]-a[2]||b[1]-a[1]).slice(0,10);
-  $("sbody").innerHTML=`<div class="row" style="margin:10px 0"><button data-back="1">← К итогам вечера</button><button data-all="30">За 30 дней</button><button data-all="0">За всё время</button></div>
+  $("sbody").innerHTML=`<div class="row" style="margin:10px 0"><button data-back="1">← К итогам вечера</button><button data-all="30">За 30 дней</button><button data-all="0">За всё время</button><button data-clearall="1" style="margin-left:auto">🧨 Очистить всё</button></div>
   <div class="stats" style="margin:6px 0">${days?"За "+days+" дней":"За всё время"}: эфиров <b>${n_eves}</b> · оценённых треков <b>${tr.length}</b></div>
   <h3>Лучшие треки</h3><table class="tbl">${top.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.n)}</td><td>@${esc(x.nick)}</td><td style="color:${col(x.r)};font-weight:800">${x.r}</td></tr>`).join("")||"<tr><td>Пока нет данных. Архив пополняется кнопкой «Новый эфир».</td></tr>"}</table>
   <h3>Лучшие по средней оценке (от 2 треков)</h3><table class="tbl">${fav.map(f=>`<tr><td>@${esc(f[0])}</td><td>${f[1]}</td><td style="color:${col(Math.round(f[2]))};font-weight:800">${f[2].toFixed(1)}</td></tr>`).join("")||"<tr><td>Пока мало данных</td></tr>"}</table>`;
@@ -679,6 +684,7 @@ document.addEventListener("click",e=>{
   const tg=e.target.closest("[data-tag]");if(tg&&S.current){const c=S.current,a=c.tags||(c.tags=[]),t=tg.dataset.tag,i=a.indexOf(t);if(i>-1)a.splice(i,1);else a.push(t);save();renderTags();return}
   const qp=e.target.closest("[data-qp]");if(qp&&S.current){const c=S.current;c.note=(c.note?c.note+", ":"")+qp.dataset.qp;$("note").value=c.note;save();return}
   const vp=e.target.closest("[data-vip]");if(vp){const i=S.queue.findIndex(q=>String(q.id)===vp.dataset.vip);if(i>-1){const it=S.queue[i];if(it.vip)delete it.vip;else{it.vip=true;S.queue.splice(i,1);S.queue.splice(S.queue.filter(q=>q.vip).length,0,it)}save();renderLists()}return}
+  if(e.target.closest("[data-clearall]")){if(clearAll())openAll(30);return}
   const al=e.target.closest("[data-all]");if(al){openAll(+al.dataset.all);return}
   if(e.target.closest("[data-back]"))openSum();
 });
