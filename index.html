@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>HMSTR.FM</title>
+<title>M1Z.FM</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🐹%3C/text%3E%3C/svg%3E">
-<meta name="description" content="HMSTR.FM — панель ведущей радио-стрима: очередь заявок, оценки и плейлист вечера.">
+<meta name="description" content="M1Z.FM — панель ведущей радио-стрима: очередь заявок, оценки и плейлист вечера.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://hmstrfm.vercel.app/">
-<meta property="og:title" content="HMSTR.FM">
+<meta property="og:url" content="https://m1zfm.vercel.app/">
+<meta property="og:title" content="M1Z.FM">
 <meta property="og:description" content="Панель ведущей радио-стрима: очередь заявок, оценки и плейлист вечера.">
-<meta property="og:image" content="https://hmstrfm.vercel.app/og.png?v=2">
+<meta property="og:image" content="https://m1zfm.vercel.app/og.png?v=1">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://hmstrfm.vercel.app/og.png?v=2">
+<meta name="twitter:image" content="https://m1zfm.vercel.app/og.png?v=1">
 <style>
 :root{color-scheme:dark;--bg:#17120f;--card:rgba(36,28,23,.72);--tx:#f5ece4;--mut:#a39284;--ac:#ff8a3d;--ac2:#ffc46b;--ln:rgba(255,255,255,.09);--in:rgba(0,0,0,.28)}
 [data-theme=neon]{--bg:#0d0221;--card:rgba(28,10,60,.7);--tx:#f3e9ff;--mut:#a58fd0;--ac:#ff2bd6;--ac2:#00e5ff}
@@ -271,7 +271,7 @@ html[data-mode=light] button:hover:not(:disabled){background:rgba(0,0,0,.06)}
 <body>
 <div class="bg"></div>
 <header>
-  <div class="logo"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>HMSTR<b>.FM</b></div>
+  <div class="logo"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>M1Z<b>.FM</b></div>
   <div class="stats" id="stats"></div>
   <div class="hr"><span class="air" id="bl" style="display:none">🕶 СЛЕПОЕ</span><span class="air" id="air">● ON AIR</span><button id="brk" class="ghost" title="Перерыв (K)">☕</button><button id="soon" class="ghost" title="Скоро начнём (L)">⏳</button><button id="sum" class="ghost">🏆 Итоги</button><button id="exp" class="ghost">📋 Плейлист</button><button id="gear" class="ghost" title="Настройки" aria-label="Настройки">⚙️</button></div>
 </header>
@@ -321,7 +321,7 @@ html[data-mode=light] button:hover:not(:disabled){background:rgba(0,0,0,.06)}
   <div class="row"><button id="t-j">▶ Джингл</button><button id="t-a">▶ Аплодисменты</button><button id="t-h">▶ Эйрхорн</button><button id="t-f">▶ Фейл</button></div>
   <h3>Чат Twitch</h3>
   <div class="fld"><label for="c-bot">Принимать заявки из чата</label><input type="checkbox" id="c-bot"></div>
-  <div class="fld"><label for="c-chan">Канал</label><input type="text" id="c-chan" placeholder="например, hmstr"></div>
+  <div class="fld"><label for="c-chan">Канал</label><input type="text" id="c-chan" placeholder="например, m1z"></div>
   <div class="fld"><label for="c-cmds">Команды</label><input type="text" id="c-cmds"></div>
   <div class="fld"><label for="c-maxq">Заявок от зрителя в очереди</label><input type="number" id="c-maxq" min="1" max="20"></div>
   <div class="fld"><label for="c-cd">Пауза между заявками, сек</label><input type="number" id="c-cd" min="0" max="600"></div>
@@ -358,9 +358,10 @@ html[data-mode=light] button:hover:not(:disabled){background:rgba(0,0,0,.06)}
 </div></div>
 <div class="toast" id="toast"></div>
 <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script>window.SFX_KEY="m1z_cfg"</script>
 <script src="sfx.js"></script>
 <script>
-const KEY="hmstr_fm_v1",$=id=>document.getElementById(id);
+const KEY="m1z_fm_v1",$=id=>document.getElementById(id);
 let S={queue:[],current:null,history:[]};
 let peer=null,conns=[],peerT=null,peerErr="",twT=null;
 const ls={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
@@ -370,11 +371,11 @@ try{S=fixS(JSON.parse(ls.get(KEY)))}catch(e){S=fixS()}
 const save=()=>{ls.set(KEY,JSON.stringify(S));bcast()};
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const isUrl=s=>/^https?:\/\//i.test(s);
-let vol=ls.get("hmstr_vol")!==null?+ls.get("hmstr_vol"):50,muted=false,player=null,ytReady=false,pending=null,playing=false;
+let vol=ls.get("m1z_vol")!==null?+ls.get("m1z_vol"):50,muted=false,player=null,ytReady=false,pending=null,playing=false;
 const ytId=u=>((u||"").match(/(?:youtu\.be\/|[?&]v=|embed\/|shorts\/)([\w-]{11})/)||[])[1];
 const THEMES=[["hamster","Хомяк","linear-gradient(135deg,#17120f,#ff8a3d)"],["neon","Неон","linear-gradient(135deg,#2a0a5e,#ff2bd6 55%,#00e5ff)"],["space","Космос","linear-gradient(135deg,#050816,#7c9cff,#c39bff)"],["lagoon","Лагуна","linear-gradient(135deg,#06201f,#2fe3b0,#6ad6ff)"],["sakura","Сакура","linear-gradient(135deg,#1d0f18,#ff7eb6,#ffc2dd)"],["matrix","Матрица","linear-gradient(135deg,#020a05,#00ff7f)"],["retro","Ретро","linear-gradient(135deg,#241407,#ffb02e,#ff6b3d)"],["volcano","Вулкан","linear-gradient(135deg,#1a0707,#ff3b3b 60%,#ff9a8a)"],["platinum","Платина","linear-gradient(135deg,#0b0c10,#e4e8f0 70%,#8a94a8)"],["stage","Сцена","linear-gradient(135deg,#100d04,#ffe11a 60%,#fff59a)"]];
-let theme=ls.get("hmstr_theme")||"hamster";
-function setTheme(t){theme=t;document.documentElement.dataset.theme=t;ls.set("hmstr_theme",t);bcast();document.querySelectorAll(".tc").forEach(b=>b.classList.toggle("on",b.dataset.t===t))}
+let theme=ls.get("m1z_theme")||"hamster";
+function setTheme(t){theme=t;document.documentElement.dataset.theme=t;ls.set("m1z_theme",t);bcast();document.querySelectorAll(".tc").forEach(b=>b.classList.toggle("on",b.dataset.t===t))}
 function toast(t){const o=$("toast");o.textContent=t;o.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>o.classList.remove("show"),1600)}
 /* helpers: дубли, фильтры, звук, слепой режим */
 function normKey(t){t=String(t||"").trim();const y=ytId(t);if(y)return"yt:"+y;const m=t.match(/open\.spotify\.com\/(?:intl-\w+\/)?(track|album|playlist|episode)\/(\w+)/);if(m)return"sp:"+m[2];
@@ -409,7 +410,7 @@ function applyVol(){
   $("vol").value=vol;$("vl").textContent=muted?"mute":vol+"%";$("mute").textContent=muted||vol==0?"🔇":vol<40?"🔉":"🔊";
   if(player&&player.setVolume){try{player.setVolume(vol);muted?player.mute():player.unMute()}catch(e){}}
 }
-function setVol(v){vol=Math.max(0,Math.min(100,v));muted=false;ls.set("hmstr_vol",vol);applyVol()}
+function setVol(v){vol=Math.max(0,Math.min(100,v));muted=false;ls.set("m1z_vol",vol);applyVol()}
 $("vol").oninput=e=>setVol(+e.target.value);
 $("mute").onclick=()=>{muted=!muted;applyVol()};
 $("pp").onclick=()=>{if(!player||!player.getPlayerState)return;player.getPlayerState()===1?player.pauseVideo():player.playVideo()};
@@ -437,7 +438,7 @@ function renderTags(){const c=S.current,on=t=>c&&(c.tags||[]).includes(t),d=c?""
 function renderNow(resetNote){
   const c=S.current;
   $("ttl").textContent=c?plName(c):"Ничего не играет";
-  $("src").textContent=c?src(c.text):"HMSTR.FM";
+  $("src").textContent=c?src(c.text):"M1Z.FM";
   $("sub").textContent=c?`от ${blindNow()?"???":"@"+c.nick}${c.author?" · "+c.author:""}${c.comment&&!blindNow()?" · «"+c.comment+"»":""}`:"Возьми трек из очереди";
   document.querySelectorAll("#rate button").forEach(b=>{const on=c&&c.rating===+b.dataset.r;b.classList.toggle("sel",!!on);b.style.background=on?col(+b.dataset.r):"";b.style.color=on?"#111":col(+b.dataset.r);});
   $("rl").textContent=(c&&c.rating?`${c.rating}/10 · ${LBL(c.rating)}`:"")+(c&&c.vn?`${c.rating?" · ":""}💬 чат: ${c.vavg} (${c.vn})`:"");
@@ -457,9 +458,9 @@ function renderLists(){
 }
 function show(){renderStage();renderNow(true);renderLists();applyVol();setLive();meta(S.current)}
 function add(){const t=$("f-t").value.trim();if(!t)return;if(isDup(t))return toast("Этот трек уже есть в очереди");S.queue.push({id:Date.now()+Math.random(),text:t,nick:$("f-n").value.trim()||"аноним",comment:$("f-c").value.trim()});$("f-t").value="";$("f-c").value="";$("f-t").focus();save();renderLists();toast("Добавлено в очередь")}
-const archGet=()=>{try{const a=JSON.parse(ls.get("hmstr_arch")||"[]");return Array.isArray(a)?a:[]}catch(e){return[]}};
+const archGet=()=>{try{const a=JSON.parse(ls.get("m1z_arch")||"[]");return Array.isArray(a)?a:[]}catch(e){return[]}};
 function archSave(){const t=[S.current,...S.history].filter(x=>x&&x.rating).map(x=>({n:plName(x),r:x.rating,nick:x.nick||"аноним",tg:x.tags||[],v:x.vavg||null}));if(!t.length)return;
-  if(!S.evId)S.evId=Date.now();const a=archGet().filter(e=>e.id!==S.evId);a.push({id:S.evId,d:S.evId,t});ls.set("hmstr_arch",JSON.stringify(a.slice(-60)))}
+  if(!S.evId)S.evId=Date.now();const a=archGet().filter(e=>e.id!==S.evId);a.push({id:S.evId,d:S.evId,t});ls.set("m1z_arch",JSON.stringify(a.slice(-60)))}
 function finish(sk){if(S.current)S.history.unshift({...S.current,skipped:!!sk});S.current=null;archSave()}
 function start(item){finish();votes={};if(brk.on){brk={on:false,until:0};brkUi()}S.current={...item,rating:null,note:"",pl:false,t0:Date.now()};snd("jingle");S.current.name=plName(S.current);save();show()}
 function next(){if(S.queue.length)start(S.queue.shift());else toast("Очередь пуста")}
@@ -499,7 +500,7 @@ $("clr").onclick=()=>{if(confirm("Очистить очередь и истор�
   archSave();
   S=fixS();save();show()}};
 
-const CFGK="hmstr_cfg";
+const CFGK="m1z_cfg";
 let cfg={chan:"",bot:false,cmds:"!заказ,!sr,!order",maxq:2,cd:30,clean:true,copy:"names",fxBg:true,fxBurst:true,ovq:true,snd:"panel",blind:false,banNicks:"",banWords:"",conf:true,sndVol:25,room:"",maxMin:8,lenSkip:true,compact:false,mode:"dark"};
 try{Object.assign(cfg,JSON.parse(ls.get(CFGK)||"{}"))}catch(e){}
 const cfgSave=()=>ls.set(CFGK,JSON.stringify(cfg));
@@ -576,10 +577,10 @@ $("mclose").onclick=()=>$("modal").classList.remove("open");
 $("modal").onclick=e=>{if(e.target===$("modal"))$("modal").classList.remove("open")};
 const ovLink=()=>location.origin+"/overlay.html?room="+cfg.room+(cfg.ovq?"":"&q=0");
 $("ov-copy").onclick=async()=>{try{await navigator.clipboard.writeText(ovLink());toast("Ссылка скопирована ✓")}catch(e){toast(ovLink())}};
-$("ov-win").onclick=()=>window.open("/overlay.html?bg=green&room="+cfg.room+(cfg.ovq?"":"&q=0"),"hmstr_overlay","width=980,height=420");
-$("d-exp").onclick=()=>{const b=new Blob([JSON.stringify({S,cfg:(({ytKey,...r})=>r)(cfg),arch:(()=>{try{return JSON.parse(ls.get("hmstr_arch")||"[]")}catch(e){return[]}})()},null,1)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="hmstr-backup.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+$("ov-win").onclick=()=>window.open("/overlay.html?bg=green&room="+cfg.room+(cfg.ovq?"":"&q=0"),"m1z_overlay","width=980,height=420");
+$("d-exp").onclick=()=>{const b=new Blob([JSON.stringify({S,cfg:(({ytKey,...r})=>r)(cfg),arch:(()=>{try{return JSON.parse(ls.get("m1z_arch")||"[]")}catch(e){return[]}})()},null,1)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="m1z-backup.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
 $("d-imp").onclick=()=>$("d-file").click();
-$("d-file").onchange=async e=>{try{const j=JSON.parse(await e.target.files[0].text());if(j.S){S=fixS(j.S);save()}if(Array.isArray(j.arch)&&j.arch.length)ls.set("hmstr_arch",JSON.stringify(j.arch.slice(-60)));if(j.cfg){Object.assign(cfg,j.cfg);cfgSave();location.reload();return}show();toast("Импортировано ✓")}catch(x){toast("Не удалось прочитать файл")}};
+$("d-file").onchange=async e=>{try{const j=JSON.parse(await e.target.files[0].text());if(j.S){S=fixS(j.S);save()}if(Array.isArray(j.arch)&&j.arch.length)ls.set("m1z_arch",JSON.stringify(j.arch.slice(-60)));if(j.cfg){Object.assign(cfg,j.cfg);cfgSave();location.reload();return}show();toast("Импортировано ✓")}catch(x){toast("Не удалось прочитать файл")}};
 /* oEmbed: название и обложка для Spotify / SoundCloud */
 async function ytMeta(x){const id=ytId(x.text);if(!id||x.author)return false;const u="https://www.youtube.com/watch?v="+id;
   for(const f of["https://www.youtube.com/oembed?format=json&url=","https://noembed.com/embed?url="]){
@@ -606,12 +607,12 @@ const splitN=x=>{const n=plName(x),m=n.match(/^(.+?)\s[–-]\s(.+)$/);return isU
 function fit(g,t,w){if(g.measureText(t).width<=w)return t;while(t.length>1&&g.measureText(t+"…").width>w)t=t.slice(0,-1);return t+"…"}
 const STORY_PAL={hamster:["#ff8a3d","#ffc46b","#18110c"],neon:["#ff2bd6","#00e5ff","#1a0938"],space:["#7c9cff","#c39bff","#0a102a"],lagoon:["#2fe3b0","#6ad6ff","#062c2a"],sakura:["#ff7eb6","#ffc2dd","#2c1322"],matrix:["#00ff7f","#b6ff5e","#02140a"],retro:["#ffb02e","#ff6b3d","#321d0a"],volcano:["#ff3b3b","#ff9a8a","#280a0a"],platinum:["#e4e8f0","#b4bdd0","#14161e"],stage:["#ffe11a","#fff59a","#221c06"]};
 let photoImg=null,storyArgs=null,sumTag="";
-function loadPhoto(){const u=ls.get("hmstr_photo");if(!u){photoImg=null;return}const im=new Image();im.onload=()=>{photoImg=im;if(storyArgs)drawStory(...storyArgs)};im.src=u}
+function loadPhoto(){const u=ls.get("m1z_photo");if(!u){photoImg=null;return}const im=new Image();im.onload=()=>{photoImg=im;if(storyArgs)drawStory(...storyArgs)};im.src=u}
 function drawStory(top,avg,n,all,cur){
   const c=$("sc"),g=c.getContext("2d"),cs=getComputedStyle(document.documentElement),V=k=>cs.getPropertyValue(k).trim()||"#ff8a3d",W=1080,H=1920,pal=STORY_PAL[($("s-style")||{}).value],ac=pal?pal[0]:V("--ac"),ac2=pal?pal[1]:V("--ac2"),BG=pal?pal[2]:V("--bg");
   const gr=g.createLinearGradient(0,0,W,H);gr.addColorStop(0,BG);gr.addColorStop(1,"#000");g.fillStyle=gr;g.fillRect(0,0,W,H);
   const rg=g.createRadialGradient(W*.8,0,0,W*.8,0,950);rg.addColorStop(0,ac);rg.addColorStop(1,"transparent");g.globalAlpha=.3;g.fillStyle=rg;g.fillRect(0,0,W,H);g.globalAlpha=1;
-  g.textAlign="center";g.fillStyle="#fff";g.font="900 88px system-ui,sans-serif";g.fillText("HMSTR.FM",W/2,170);
+  g.textAlign="center";g.fillStyle="#fff";g.font="900 88px system-ui,sans-serif";g.fillText("M1Z.FM",W/2,170);
   g.fillStyle=ac2;g.font="600 38px system-ui,sans-serif";g.fillText(new Date().toLocaleDateString("ru-RU",{day:"numeric",month:"long"})+" · итоги эфира",W/2,232);
   g.fillStyle=ac;g.font="900 300px system-ui,sans-serif";g.fillText(n?avg.toFixed(1):"–",W/2,590);
   g.fillStyle="#fff";g.font="600 40px system-ui,sans-serif";g.fillText("средняя оценка вечера",W/2,662);
@@ -654,7 +655,7 @@ function openSum(){
   $("smodal").classList.add("open");
 }
 function openAll(days){
-  let arch=[];try{arch=JSON.parse(ls.get("hmstr_arch")||"[]")}catch(e){}
+  let arch=[];try{arch=JSON.parse(ls.get("m1z_arch")||"[]")}catch(e){}
   const lim=days?Date.now()-days*864e5:0,eves=arch.filter(e=>e.d>=lim&&e.id!==S.evId);
   const now=[S.current,...S.history].filter(x=>x&&x.rating).map(x=>({n:plName(x),r:x.rating,nick:x.nick||"аноним"}));
   const tr=[...eves.flatMap(e=>e.t),...now],n_eves=eves.length+(now.length?1:0);
@@ -668,7 +669,7 @@ function openAll(days){
 }
 
 function updVotes(){const c=S.current;if(!c)return;const v=Object.values(votes);c.vn=v.length;c.vavg=v.length?+(v.reduce((a,x)=>a+x,0)/v.length).toFixed(1):null;save();renderNow(false)}
-function brkUi(){ls.set("hmstr_brk",JSON.stringify(brk));$("brk").classList.toggle("on",brk.on&&brk.kind!=="soon");$("soon").classList.toggle("on",brk.on&&brk.kind==="soon")}
+function brkUi(){ls.set("m1z_brk",JSON.stringify(brk));$("brk").classList.toggle("on",brk.on&&brk.kind!=="soon");$("soon").classList.toggle("on",brk.on&&brk.kind==="soon")}
 function brkToggle(kind){
   if(brk.on&&brk.kind===kind){brk={on:false,until:0};brkUi();bcast();toast("Заставка выключена");return}
   const v=prompt(kind==="soon"?"Через сколько минут начнём? (пусто — без таймера)":"На сколько минут перерыв? (пусто — без таймера)","5");if(v===null)return;
@@ -689,13 +690,13 @@ $("queue").addEventListener("drop",e=>{if(dragId==null)return;e.preventDefault()
 $("queue").addEventListener("dragend",()=>{dragId=null;renderLists()});
 $("sbody").addEventListener("change",e=>{if(e.target.id==="s-tag"){sumTag=e.target.value;openSum()}});
 $("s-style").onchange=()=>{if(storyArgs)drawStory(...storyArgs)};
-$("s-photo").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement("canvas"),s=256,k=Math.max(s/im.width,s/im.height);c.width=c.height=s;c.getContext("2d").drawImage(im,(s-im.width*k)/2,(s-im.height*k)/2,im.width*k,im.height*k);ls.set("hmstr_photo",c.toDataURL("image/jpeg",.85));loadPhoto()};im.src=r.result};r.readAsDataURL(f);e.target.value=""};
-$("s-nophoto").onclick=()=>{ls.set("hmstr_photo","");photoImg=null;if(storyArgs)drawStory(...storyArgs)};
+$("s-photo").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement("canvas"),s=256,k=Math.max(s/im.width,s/im.height);c.width=c.height=s;c.getContext("2d").drawImage(im,(s-im.width*k)/2,(s-im.height*k)/2,im.width*k,im.height*k);ls.set("m1z_photo",c.toDataURL("image/jpeg",.85));loadPhoto()};im.src=r.result};r.readAsDataURL(f);e.target.value=""};
+$("s-nophoto").onclick=()=>{ls.set("m1z_photo","");photoImg=null;if(storyArgs)drawStory(...storyArgs)};
 loadPhoto();
 $("sum").onclick=openSum;$("sclose").onclick=()=>$("smodal").classList.remove("open");$("smodal").onclick=e=>{if(e.target===$("smodal"))$("smodal").classList.remove("open")};
-$("s-png").onclick=()=>$("sc").toBlob(b=>{const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="hmstr-story.png";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)});
+$("s-png").onclick=()=>$("sc").toBlob(b=>{const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="m1z-story.png";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)});
 $("x-copy").onclick=async()=>{try{await navigator.clipboard.writeText(plItems().map(plOut).join("\n"));toast("Скопировано ✓")}catch(e){toast("Не удалось скопировать")}};
-$("x-csv").onclick=()=>{const q=v=>'"'+String(v).replace(/"/g,'""')+'"',rows=[["Artist","Title","Link"],...plItems().map(x=>[...splitN(x),x.text])],b=new Blob(["\ufeff"+rows.map(r=>r.map(q).join(",")).join("\n")],{type:"text/csv"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="hmstr-playlist.csv";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+$("x-csv").onclick=()=>{const q=v=>'"'+String(v).replace(/"/g,'""')+'"',rows=[["Artist","Title","Link"],...plItems().map(x=>[...splitN(x),x.text])],b=new Blob(["\ufeff"+rows.map(r=>r.map(q).join(",")).join("\n")],{type:"text/csv"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="m1z-playlist.csv";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
 /* синхронизация с оверлеем через WebRTC (PeerJS), не зависит от браузера/профиля */
 const pubState=()=>{const c=S.current;return{t:Date.now(),pos:(()=>{try{return player&&player.getCurrentTime&&c&&player.getVideoData().video_id===ytId(c.text)?player.getCurrentTime():0}catch(e){return 0}})(),play:!!playing,theme,blind:!!cfg.blind,dur:(()=>{try{return player&&c&&player.getVideoData().video_id===ytId(c.text)?(player.getDuration()||0):0}catch(e){return 0}})(),vote:c?{avg:c.vavg||null,n:c.vn||0,open:!c.rating}:null,brk:brk.on?{rem:brk.until?Math.max(0,brk.until-Date.now()):null,kind:brk.kind||"break"}:null,ev:(()=>{const r=[S.current,...S.history].filter(x=>x&&x.rating);return{cnt:r.length,avg:r.length?+(r.reduce((a,x)=>a+x.rating,0)/r.length).toFixed(1):null}})(),hist:S.history.filter(x=>x.rating).slice(0,5).map(x=>({n:plName(x),r:x.rating})),snd:cfg.snd,sndVol:cfg.sndVol,current:c?{id:c.id,text:c.text,name:c.name,title:c.title,nick:c.nick,rating:c.rating||null,thumb:c.thumb||"",t0:c.t0||0,cover:c.cover||"",noemb:!!c.noemb}:null,queue:S.queue.slice(0,5).map(x=>({id:x.id,text:x.text,nick:x.nick}))}};
 function bcast(){try{conns=conns.filter(c=>c.open);if(!conns.length)return;const m=pubState();conns.forEach(c=>c.send(m))}catch(e){}}
@@ -703,7 +704,7 @@ function ovSt(){const n=conns.filter(c=>c.open).length,e=$("ov-st");if(!e)return
 function peerStart(){
   clearTimeout(peerT);
   if(!window.Peer){peerErr="нет связи с сервером синхронизации";ovSt();return}
-  try{if(peer&&!peer.destroyed)peer.destroy();conns=[];peer=new Peer("hmstrfm-"+cfg.room);
+  try{if(peer&&!peer.destroyed)peer.destroy();conns=[];peer=new Peer("m1zfm-"+cfg.room);
     peer.on("open",()=>{peerErr="";ovSt()});
     peer.on("connection",c=>{c.on("open",()=>{conns.push(c);try{c.send(pubState())}catch(e){}ovSt()});const gone=()=>{conns=conns.filter(x=>x!==c);ovSt()};c.on("close",gone);c.on("error",gone)});
     peer.on("disconnected",()=>{try{peer.reconnect()}catch(e){}});
