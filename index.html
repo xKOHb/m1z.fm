@@ -4,17 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>M1Z.FM</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🐹%3C/text%3E%3C/svg%3E">
-<meta name="description" content="M1Z.FM — панель ведущей радио-стрима: очередь заявок, оценки и плейлист вечера.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23111'/%3E%3Ccircle cx='50' cy='50' r='34' fill='none' stroke='%23333' stroke-width='3'/%3E%3Ccircle cx='50' cy='50' r='16' fill='%23ff3341'/%3E%3Ccircle cx='50' cy='50' r='3' fill='%23111'/%3E%3C/svg%3E">
+<meta name="description" content="M1Z.FM — панель ведущего радио-стрима: очередь заявок, оценки и плейлист вечера.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://m1zfm.vercel.app/">
 <meta property="og:title" content="M1Z.FM">
-<meta property="og:description" content="Панель ведущей радио-стрима: очередь заявок, оценки и плейлист вечера.">
-<meta property="og:image" content="https://m1zfm.vercel.app/og.png?v=1">
+<meta property="og:description" content="Панель ведущего радио-стрима: очередь заявок, оценки и плейлист вечера.">
+<meta property="og:image" content="https://m1zfm.vercel.app/og.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://m1zfm.vercel.app/og.png?v=1">
+<meta name="twitter:image" content="https://m1zfm.vercel.app/og.png?v=2">
 <style>
 :root{color-scheme:dark;--bg:#17120f;--card:rgba(36,28,23,.72);--tx:#f5ece4;--mut:#a39284;--ac:#ff8a3d;--ac2:#ffc46b;--ln:rgba(255,255,255,.09);--in:rgba(0,0,0,.28)}
 [data-theme=neon]{--bg:#0d0221;--card:rgba(28,10,60,.7);--tx:#f3e9ff;--mut:#a58fd0;--ac:#ff2bd6;--ac2:#00e5ff}
@@ -136,6 +136,12 @@ kbd{background:var(--in);border:1px solid var(--ln);border-radius:6px;padding:1p
 [data-theme=retro] .bg::before{display:none}
 [data-theme=retro] .bg::after{display:none}
 html[data-fx=off] .bg::before,html[data-fx=off] .bg::after{animation:none}
+/* лёгкий режим: без canvas-фонов, размытий и анимаций фона */
+html[data-lite=on] .m1zf,html[data-lite=on] .vhs,html[data-lite=on] .ambient{display:none!important}
+html[data-lite=on] .bg::before,html[data-lite=on] .bg::after{animation:none!important}
+html[data-lite=on] .card,html[data-lite=on] header{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+html[data-lite=on] body.live .stage{box-shadow:none}
+html[data-lite=on][data-theme=m1z]{--card:rgba(13,13,15,.8)}
 
 /* retro: VHS / старый телик */
 .vhs{position:absolute;inset:0;display:none;pointer-events:none;overflow:hidden}
@@ -343,13 +349,14 @@ html[data-mode=light] button:hover:not(:disabled){background:rgba(0,0,0,.06)}
   <div class="row"><button id="t-j">▶ Джингл</button><button id="t-a">▶ Аплодисменты</button><button id="t-h">▶ Эйрхорн</button><button id="t-f">▶ Фейл</button></div>
   <h3>Чат Twitch</h3>
   <div class="fld"><label for="c-bot">Принимать заявки из чата</label><input type="checkbox" id="c-bot"></div>
-  <div class="fld"><label for="c-chan">Канал</label><input type="text" id="c-chan" placeholder="например, m1z"></div>
+  <div class="fld"><label for="c-chan">Канал</label><input type="text" id="c-chan" placeholder="например, m1z_qq"></div>
   <div class="fld"><label for="c-cmds">Команды</label><input type="text" id="c-cmds"></div>
   <div class="fld"><label for="c-maxq">Заявок от зрителя в очереди</label><input type="number" id="c-maxq" min="1" max="20"></div>
   <div class="fld"><label for="c-cd">Пауза между заявками, сек</label><input type="number" id="c-cd" min="0" max="600"></div>
   <div class="fld"><label for="c-maxmin">Лимит длины трека, мин<small>0 — без лимита; проверяется для YouTube, у остальных длина неизвестна</small></label><input type="number" id="c-maxmin" min="0" max="120"></div>
   <div class="fld"><label for="c-lenskip">Пропускать треки длиннее лимита<small>выключено — только предупреждение</small></label><input type="checkbox" id="c-lenskip"></div>
       <div class="fld"><label for="c-compact">Компактная панель<small>одна колонка, без подсказок и подсветки: удобно для маленького окна</small></label><input type="checkbox" id="c-compact"></div>
+  <div class="fld"><label for="c-lite">Лёгкий режим<small>если панель тормозит: без анимированного фона, размытий и свечения плеера</small></label><input type="checkbox" id="c-lite"></div>
   <div class="fld"><label for="c-mode">Тема оформления<small>тёмная, светлая или как в системе · клавиша D</small></label><select id="c-mode"><option value="dark">Тёмная</option><option value="light">Светлая</option><option value="auto">Как в системе</option></select></div>
   <div class="hint"><span class="dot" id="tw-dot"></span><span id="tw-st">выключено</span> · читает чат анонимно, отвечать не умеет. Пример: <b>!заказ Artist - Song</b></div>
   <div class="hint" id="tw-last"></div>
@@ -371,7 +378,7 @@ html[data-mode=light] button:hover:not(:disabled){background:rgba(0,0,0,.06)}
   <div class="shh">Итоги вечера <button id="sclose" class="ghost">✕</button></div>
   <div id="sbody"></div>
   <canvas id="sc" width="1080" height="1920"></canvas>
-  <div class="row" style="justify-content:center"><select id="s-style" aria-label="Стиль картинки"></select><label class="lnk" for="s-photo" style="cursor:pointer">📷 Фото ведущей</label><input type="file" id="s-photo" accept="image/*" hidden><button id="s-nophoto" class="ghost">убрать фото</button></div>
+  <div class="row" style="justify-content:center"><select id="s-style" aria-label="Стиль картинки"></select><label class="lnk" for="s-photo" style="cursor:pointer">📷 Фото ведущего</label><input type="file" id="s-photo" accept="image/*" hidden><button id="s-nophoto" class="ghost">убрать фото</button></div>
   <div class="row" style="justify-content:center"><button class="p" id="s-png">⬇ Картинка для сторис</button></div>
   <h3>Экспорт плейлиста</h3>
   <div id="xbody"></div>
@@ -523,17 +530,17 @@ $("clr").onclick=()=>{if(confirm("Очистить очередь и истор�
   S=fixS();save();show()}};
 
 function clearAll(){
-  if(!confirm("Очистить ВСЁ?\nОчередь, «На проверке», историю, текущий трек и архив эфиров («За 30 дней» / «За всё время»). Настройки, тема и фото ведущей останутся. Это нельзя отменить."))return false;
+  if(!confirm("Очистить ВСЁ?\nОчередь, «На проверке», историю, текущий трек и архив эфиров («За 30 дней» / «За всё время»). Настройки, тема и фото ведущего останутся. Это нельзя отменить."))return false;
   ls.set("m1z_arch","[]");votes={};brk={on:false,until:0};brkUi();
   S=fixS();save();show();toast("Всё очищено ✓");return true}
 $("clr-all").onclick=()=>{if(clearAll())$("modal").classList.remove("open")};
 const CFGK="m1z_cfg";
-let cfg={chan:"",bot:false,cmds:"!заказ,!sr,!order",maxq:2,cd:30,clean:true,copy:"names",fxBg:true,fxBurst:true,ovq:true,snd:"panel",blind:false,banNicks:"",banWords:"",conf:true,sndVol:25,room:"",maxMin:8,lenSkip:true,compact:false,mode:"dark"};
+let cfg={chan:"",bot:false,cmds:"!заказ,!sr,!order",maxq:2,cd:30,clean:true,copy:"names",fxBg:true,fxBurst:true,ovq:true,snd:"panel",blind:false,banNicks:"",banWords:"",conf:true,sndVol:25,room:"",maxMin:8,lenSkip:true,compact:false,lite:false,mode:"dark"};
 try{Object.assign(cfg,JSON.parse(ls.get(CFGK)||"{}"))}catch(e){}
 const cfgSave=()=>ls.set(CFGK,JSON.stringify(cfg));
 function chanName(v){v=String(v||"").trim().toLowerCase();const m=v.match(/twitch\.tv\/(?:popout\/)?([a-z0-9_]+)/);if(m)v=m[1];return v.replace(/^[#@]/,"").replace(/[^a-z0-9_]/g,"")}
-cfg.chan=chanName(cfg.chan);if(!cfg.room){cfg.room=Math.random().toString(36).slice(2,12);cfgSave()}
-function applyCfg(){document.documentElement.dataset.mode=cfg.mode==="auto"?(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"):cfg.mode==="light"?"light":"dark";document.documentElement.dataset.fx=cfg.fxBg?"on":"off";document.documentElement.dataset.compact=cfg.compact?"on":"off";$("bl").style.display=cfg.blind?"":"none"}
+cfg.chan=chanName(cfg.chan||"m1z_qq");if(!cfg.room){cfg.room=Math.random().toString(36).slice(2,12);cfgSave()}
+function applyCfg(){document.documentElement.dataset.mode=cfg.mode==="auto"?(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"):cfg.mode==="light"?"light":"dark";document.documentElement.dataset.fx=cfg.fxBg?"on":"off";document.documentElement.dataset.compact=cfg.compact?"on":"off";document.documentElement.dataset.lite=cfg.lite?"on":"off";$("bl").style.display=cfg.blind?"":"none"}
 /* clean names for playlist */
 function cleanTitle(t){
   t=String(t||"");if(!cfg.clean)return t.trim();
@@ -593,7 +600,7 @@ function onChat(tags,login,msg){
 /* settings UI */
 $("tgrid").innerHTML=THEMES.map(([k,n,g])=>`<button class="tc" data-t="${k}"><div class="pv" style="background:${g}"></div><span>${n}</span></button>`).join("");
 $("tgrid").onclick=e=>{const b=e.target.closest(".tc");if(b)setTheme(b.dataset.t)};
-[["c-chan","chan","s"],["c-bot","bot","b"],["c-cmds","cmds","s"],["c-maxq","maxq","n"],["c-cd","cd","n"],["c-maxmin","maxMin","n"],["c-lenskip","lenSkip","b"],["c-compact","compact","b"],["c-mode","mode","s"],["c-clean","clean","b"],["c-copy","copy","s"],["c-fxbg","fxBg","b"],["c-fxb","fxBurst","b"],["c-ovq","ovq","b"],["c-sndv","sndVol","n"],["c-snd","snd","s"],["c-blind","blind","b"],["c-bann","banNicks","s"],["c-banw","banWords","s"],["c-conf","conf","b"]].forEach(([id,k,ty])=>{
+[["c-chan","chan","s"],["c-bot","bot","b"],["c-cmds","cmds","s"],["c-maxq","maxq","n"],["c-cd","cd","n"],["c-maxmin","maxMin","n"],["c-lenskip","lenSkip","b"],["c-compact","compact","b"],["c-lite","lite","b"],["c-mode","mode","s"],["c-clean","clean","b"],["c-copy","copy","s"],["c-fxbg","fxBg","b"],["c-fxb","fxBurst","b"],["c-ovq","ovq","b"],["c-sndv","sndVol","n"],["c-snd","snd","s"],["c-blind","blind","b"],["c-bann","banNicks","s"],["c-banw","banWords","s"],["c-conf","conf","b"]].forEach(([id,k,ty])=>{
   const el=$(id);if(ty==="b")el.checked=!!cfg[k];else el.value=cfg[k];
   el.onchange=()=>{cfg[k]=ty==="b"?el.checked:ty==="n"?+el.value:el.value.trim();if(k==="chan"){cfg.chan=chanName(el.value);el.value=cfg.chan}cfgSave();applyCfg();bcast();
     if(k==="chan"||k==="bot")twConnect();if(k==="blind"){renderNow(false);renderLists()}
@@ -602,9 +609,10 @@ $("tgrid").onclick=e=>{const b=e.target.closest(".tc");if(b)setTheme(b.dataset.t
 $("gear").onclick=()=>$("modal").classList.add("open");
 $("mclose").onclick=()=>$("modal").classList.remove("open");
 $("modal").onclick=e=>{if(e.target===$("modal"))$("modal").classList.remove("open")};
-const ovLink=()=>location.origin+"/overlay-m1z.html?room="+cfg.room+(cfg.ovq?"":"&q=0");
+const ovQ=()=>"room="+cfg.room+(cfg.ovq?"":"&q=0")+(cfg.chan?"&chan="+encodeURIComponent(cfg.chan):"");
+const ovLink=()=>location.origin+"/overlay.html?"+ovQ();
 $("ov-copy").onclick=async()=>{try{await navigator.clipboard.writeText(ovLink());toast("Ссылка скопирована ✓")}catch(e){toast(ovLink())}};
-$("ov-win").onclick=()=>window.open("/overlay-m1z.html?bg=green&room="+cfg.room+(cfg.ovq?"":"&q=0"),"m1z_overlay","width=980,height=420");
+$("ov-win").onclick=()=>window.open("/overlay.html?bg=green&"+ovQ(),"m1z_overlay","width=980,height=420");
 $("d-exp").onclick=()=>{const b=new Blob([JSON.stringify({S,cfg:(({ytKey,...r})=>r)(cfg),arch:(()=>{try{return JSON.parse(ls.get("m1z_arch")||"[]")}catch(e){return[]}})()},null,1)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="m1z-backup.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
 $("d-imp").onclick=()=>$("d-file").click();
 $("d-file").onchange=async e=>{try{const j=JSON.parse(await e.target.files[0].text());if(j.S){S=fixS(j.S);save()}if(Array.isArray(j.arch)&&j.arch.length)ls.set("m1z_arch",JSON.stringify(j.arch.slice(-60)));if(j.cfg){Object.assign(cfg,j.cfg);cfgSave();location.reload();return}show();toast("Импортировано ✓")}catch(x){toast("Не удалось прочитать файл")}};
@@ -657,7 +665,7 @@ function renderStats(){
   if(!rt.length){el.innerHTML='<div class="empty">Появится после первой оценки.</div>';return}
   let sm=0;const run=rt.map((x,i)=>(sm+=x.rating)/(i+1)),cnt=Array(10).fill(0);rt.forEach(x=>cnt[x.rating-1]++);
   const mx=Math.max(...cnt),dd=all.filter(x=>x.dur>0&&!x.skipped).sort((a,b)=>a.dur-b.dur),cv=rt.filter(x=>x.vn);
-  el.innerHTML=`<div class="stats">Средняя: <b>${run[run.length-1].toFixed(2)}</b> · оценок: <b>${rt.length}</b>${cv.length?` · чат / ведущая: <b>${(cv.reduce((a,x)=>a+x.vavg,0)/cv.length).toFixed(1)}</b> / <b>${(cv.reduce((a,x)=>a+x.rating,0)/cv.length).toFixed(1)}</b>`:""}</div>${sparkSvg(run)}<div style="display:flex;gap:4px;align-items:flex-end;height:54px">${cnt.map((c,i)=>`<div title="${i+1}: ${c}" style="flex:1;height:${c?8+c/mx*46:3}px;background:${col(i+1)};border-radius:4px;opacity:${c?1:.25}"></div>`).join("")}</div>${dd.length?`<div class="hint">Длиннее всех: <b>${esc(plName(dd[dd.length-1]))}</b> (${fmt(dd[dd.length-1].dur)}) · короче всех: <b>${esc(plName(dd[0]))}</b> (${fmt(dd[0].dur)})</div>`:""}`}
+  el.innerHTML=`<div class="stats">Средняя: <b>${run[run.length-1].toFixed(2)}</b> · оценок: <b>${rt.length}</b>${cv.length?` · чат / ведущий: <b>${(cv.reduce((a,x)=>a+x.vavg,0)/cv.length).toFixed(1)}</b> / <b>${(cv.reduce((a,x)=>a+x.rating,0)/cv.length).toFixed(1)}</b>`:""}</div>${sparkSvg(run)}<div style="display:flex;gap:4px;align-items:flex-end;height:54px">${cnt.map((c,i)=>`<div title="${i+1}: ${c}" style="flex:1;height:${c?8+c/mx*46:3}px;background:${col(i+1)};border-radius:4px;opacity:${c?1:.25}"></div>`).join("")}</div>${dd.length?`<div class="hint">Длиннее всех: <b>${esc(plName(dd[dd.length-1]))}</b> (${fmt(dd[dd.length-1].dur)}) · короче всех: <b>${esc(plName(dd[0]))}</b> (${fmt(dd[0].dur)})</div>`:""}`}
 function sparkSvg(rs){if(rs.length<2)return"";const w=640,h=90,q=8,xs=i=>q+i*(w-2*q)/(rs.length-1),ys=r=>h-q-(r-1)*(h-2*q)/9;
   return`<svg class="spark" viewBox="0 0 ${w} ${h}" style="width:100%;height:90px;display:block"><polyline points="${rs.map((r,i)=>xs(i).toFixed(1)+","+ys(r).toFixed(1)).join(" ")}" fill="none" stroke="var(--ac)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>${rs.map((r,i)=>`<circle cx="${xs(i).toFixed(1)}" cy="${ys(r).toFixed(1)}" r="4.5" fill="${col(r)}"/>`).join("")}</svg>`}
 function openSum(){
@@ -674,7 +682,7 @@ function openSum(){
   ${dd.length?`<div class="hint">Самый длинный: <b>${esc(plName(dd[dd.length-1]))}</b> (${fmt(dd[dd.length-1].dur)}) · самый короткий: <b>${esc(plName(dd[0]))}</b> (${fmt(dd[0].dur)})</div>`:""}
   <div class="row" style="margin:10px 0"><select id="s-tag"><option value="">Хит-парад: все теги</option>${TAGS.map(([e,t])=>`<option value="${t}"${sumTag===t?" selected":""}>${e} ${t}</option>`).join("")}</select><button data-all="30">🗓 За 30 дней</button><button data-all="0">🗓 За всё время</button></div>
   <h3>Хит-парад вечера</h3><table class="tbl"><tr><th></th><th>Трек</th><th>Ник</th><th>Чат</th><th>Оценка</th></tr>${top.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(plName(x))}${x.tags&&x.tags.length?" <small>"+esc(x.tags.join(", "))+"</small>":""}</td><td>@${esc(x.nick)}</td><td>${x.vn?x.vavg+" ("+x.vn+")":"–"}</td><td style="color:${col(x.rating)};font-weight:800">${x.rating}</td></tr>`).join("")||"<tr><td colspan=5>Нет оценок"+(sumTag?" с тегом «"+esc(sumTag)+"»":"")+"</td></tr>"}</table>
-  <h3>Любимчики ведущей</h3><table class="tbl"><tr><th>Ник</th><th>Треков</th><th>Средняя оценка</th></tr>${fav.map(f=>`<tr><td>@${esc(f[0])}</td><td>${f[1]}</td><td style="color:${col(Math.round(f[2]))};font-weight:800">${f[2].toFixed(1)}</td></tr>`).join("")||"<tr><td colspan=3>Пока нет оценок</td></tr>"}</table>
+  <h3>Любимчики ведущего</h3><table class="tbl"><tr><th>Ник</th><th>Треков</th><th>Средняя оценка</th></tr>${fav.map(f=>`<tr><td>@${esc(f[0])}</td><td>${f[1]}</td><td style="color:${col(Math.round(f[2]))};font-weight:800">${f[2].toFixed(1)}</td></tr>`).join("")||"<tr><td colspan=3>Пока нет оценок</td></tr>"}</table>
   <h3>Кураторы вечера (треков с оценкой 8+)</h3><table class="tbl">${curators.map(c=>`<tr><td>@${esc(c[0])}</td><td style="font-weight:800">${c[1]}</td></tr>`).join("")||"<tr><td>Пока нет</td></tr>"}</table>`;
   storyArgs=[topAll,avg,rt.length,all.length,curators];drawStory(...storyArgs);
   const pl=plItems();
@@ -841,11 +849,11 @@ setTheme(theme);show();
     const dt=Math.min(.1,(ts-last)/1000||.033);last=ts;draw(ts/1000,dt);
   }
   function upd(){
-    const on=H.dataset.theme==="retro"&&H.dataset.mode!=="light"&&H.dataset.fx!=="off"&&!document.hidden&&!matchMedia("(prefers-reduced-motion:reduce)").matches;
+    const on=H.dataset.theme==="retro"&&H.dataset.mode!=="light"&&H.dataset.fx!=="off"&&H.dataset.lite!=="on"&&!document.hidden&&!matchMedia("(prefers-reduced-motion:reduce)").matches;
     if(on&&!raf){init();last=0;raf=requestAnimationFrame(loop)}
     else if(!on&&raf){cancelAnimationFrame(raf);raf=0;x.clearRect(0,0,cv.width,cv.height)}
   }
-  new MutationObserver(upd).observe(H,{attributes:true,attributeFilter:["data-theme","data-mode","data-fx"]});
+  new MutationObserver(upd).observe(H,{attributes:true,attributeFilter:["data-theme","data-mode","data-fx","data-lite"]});
   document.addEventListener("visibilitychange",upd);
   let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>{if(raf)init()},200)});
   upd();
@@ -923,7 +931,7 @@ setTheme(theme);show();
   }
   function loop(ts){raf=requestAnimationFrame(loop);if(ts-last<33)return;last=ts;draw(ts/1000)}
   function upd(){
-    const show=H.dataset.theme==="m1z"&&H.dataset.mode!=="light"&&!document.hidden;
+    const show=H.dataset.theme==="m1z"&&H.dataset.mode!=="light"&&H.dataset.lite!=="on"&&!document.hidden;
     const anim=show&&H.dataset.fx!=="off"&&!matchMedia("(prefers-reduced-motion:reduce)").matches;
     if(show&&!vars.length)init();
     if(anim&&!raf){last=0;raf=requestAnimationFrame(loop)}
@@ -931,7 +939,7 @@ setTheme(theme);show();
     if(show&&!anim)draw(2);
     if(!show&&!raf)x.clearRect(0,0,cw,ch);
   }
-  new MutationObserver(upd).observe(H,{attributes:true,attributeFilter:["data-theme","data-mode","data-fx"]});
+  new MutationObserver(upd).observe(H,{attributes:true,attributeFilter:["data-theme","data-mode","data-fx","data-lite"]});
   document.addEventListener("visibilitychange",upd);
   let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>{if(vars.length){init();if(!raf)upd()}},250)});
   upd();

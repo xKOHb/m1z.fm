@@ -111,7 +111,7 @@ body.green{background:#00ff00}
 .vote.show{opacity:1}.vote b{color:var(--ac2)}
 .flash{position:absolute;inset:0;background:radial-gradient(circle,#fff,var(--ac) 40%,transparent 75%);opacity:0;pointer-events:none;z-index:8}
 .flash.go{animation:fl 1s ease-out}@keyframes fl{0%{opacity:.85}100%{opacity:0}}
-.ham{position:absolute;top:-80px;font-size:56px;font-style:normal;animation:fall linear forwards;z-index:9}
+.rn{position:absolute;top:-80px;font-size:56px;font-style:normal;animation:fall linear forwards;z-index:9}
 .skull{position:absolute;left:50%;top:40%;font-size:300px;z-index:9;transform:translate(-50%,-50%) scale(0);animation:sk 2.4s ease-out forwards}
 @keyframes sk{15%{transform:translate(-50%,-50%) scale(1.1) rotate(-8deg)}30%{transform:translate(-50%,-50%) scale(1) rotate(6deg)}80%{opacity:1}100%{transform:translate(-50%,-30%) scale(1);opacity:0}}
 .tick{position:absolute;left:0;right:0;bottom:0;height:54px;display:none;align-items:center;overflow:hidden;z-index:6;background:var(--card);border-top:2px solid color-mix(in srgb,var(--ac) 55%,transparent)}
@@ -164,7 +164,7 @@ if(CLIP){STG.classList.add("hasclip");$("card").classList.add("nc");const w=pars
 function fit(){const k=Math.min(innerWidth/1920,innerHeight/1080);STG.style.transform="scale("+k+")";STG.style.left=(innerWidth-1920*k)/2+"px";STG.style.top=(innerHeight-1080*k)/2+"px"}
 addEventListener("resize",fit);fit();
 /* чат: ?chat=0 — скрыть; ?chatt=30 — сколько секунд живёт сообщение */
-const CHAT_URL="https://chat.eblo.id/chat/overlay/?channel=h_mst_r&font=2&shadow=1&nick_name=display&nick_cut=off&smooth=10&fade=20&max_lines=10&paint_shadows=false&plus_paint_shadows=false&chatterino_badges=true&ffz_badges=true&homies_badges=true&effects=false&link_urls=hide&gif_size=small&events=announcement%2Csub%2Cgift%2Craid%2Ccheer&collapse_spam=true&sv=3";
+const CHAT_URL="https://chat.eblo.id/chat/overlay/?channel=m1z_qq&font=2&shadow=1&nick_name=display&nick_cut=off&smooth=10&fade=20&max_lines=10&paint_shadows=false&plus_paint_shadows=false&chatterino_badges=true&ffz_badges=true&homies_badges=true&effects=false&link_urls=hide&gif_size=small&events=announcement%2Csub%2Cgift%2Craid%2Ccheer&collapse_spam=true&sv=3";
 /* ?chat=0 — без чата; ?chat=own — встроенный простой чат (через панель); иначе — внешний чат chat.eblo.id в рамке.
    ?chath=560 — высота рамки чата, ?chaty=0 — сдвиг сверху в px (можно отрицательный); ?chan=имя — другой канал; ?chaturl=… — свой адрес чата целиком */
 const CM=P.get("chat"),XCHAT=CM!=="0"&&CM!=="own"&&!!(P.get("chan")||P.get("chaturl"));
@@ -287,7 +287,7 @@ function extra(S,c,r,th,name){
 setInterval(()=>{if(!SC.on)return;$("snt").textContent=SC.end?fmt(Math.max(0,Math.ceil((SC.end-Date.now())/1000))):(SC.kind==="soon"?"…":"☕")},250);
 function fitTitle(){const e=$("ttl");let fs=CLIP?26:36;e.style.fontSize=fs+"px";while(fs>13&&e.scrollHeight>fs*1.15*2+2){fs--;e.style.fontSize=fs+"px"}}
 function flash(){const f=$("fl");f.classList.remove("go");void f.offsetWidth;f.classList.add("go")}
-function rain(){for(let i=0;i<26;i++){const d=document.createElement("i");d.className="ham";d.textContent=i%5?"🐹":"⭐";d.style.left=Math.random()*96+"%";d.style.animationDuration=(2.6+Math.random()*2.2)+"s";d.style.animationDelay=Math.random()*1.2+"s";STG.appendChild(d);setTimeout(()=>d.remove(),7000)}}
+function rain(){for(let i=0;i<26;i++){const d=document.createElement("i");d.className="rn";d.textContent=i%5?"🎵":"⭐";d.style.left=Math.random()*96+"%";d.style.animationDuration=(2.6+Math.random()*2.2)+"s";d.style.animationDelay=Math.random()*1.2+"s";STG.appendChild(d);setTimeout(()=>d.remove(),7000)}}
 function skull(){const d=document.createElement("div");d.className="skull";d.textContent="💀";STG.appendChild(d);setTimeout(()=>d.remove(),2600)}
 addEventListener("storage",upd);
 setInterval(upd,1000);upd();rJoin();
