@@ -82,7 +82,7 @@ input:focus{border-color:var(--ac);box-shadow:0 0 0 3px color-mix(in srgb,var(--
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .sw0{position:relative}
 .stagewrap{position:relative}
-.ambient{position:absolute;inset:-6px;background-size:cover;background-position:center;filter:blur(38px) saturate(1.4);opacity:.55;transition:background-image .5s;border-radius:24px}
+.ambient{position:absolute;inset:-6px;background-size:cover;background-position:center;filter:blur(24px) saturate(1.3);opacity:.55;transition:background-image .5s;border-radius:24px}
 .stage{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#000;border:1px solid var(--ln)}
 .stage.auto{aspect-ratio:auto;min-height:170px;background:var(--in);display:flex;align-items:center;justify-content:center}
 .stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.stage.auto iframe{position:static;height:auto}
@@ -135,13 +135,39 @@ kbd{background:var(--in);border:1px solid var(--ln);border-radius:6px;padding:1p
 [data-theme=retro] .bg{background:radial-gradient(ellipse at 50% 40%,#140d1f,#060508 75%)}
 [data-theme=retro] .bg::before{display:none}
 [data-theme=retro] .bg::after{display:none}
+@keyframes ntSweep{from{transform:translateX(-25%)}to{transform:translateX(25%)}}
+/* ===== новые темы M1Z: aurora, sunset, frost, toxic, gold ===== */
+[data-theme=aurora]{--bg:#040d12;--card:rgba(8,26,32,.74);--tx:#e8fff6;--mut:#86b8ad;--ac:#4dffb0;--ac2:#8f7bff}
+[data-theme=aurora] .bg{background:radial-gradient(900px 500px at 50% 118%,rgba(77,255,176,.16),transparent 70%),linear-gradient(180deg,#030a14,#06222a 72%,#04141b)}
+[data-theme=aurora] .bg::before{inset:-30%;background:linear-gradient(105deg,transparent 26%,rgba(77,255,176,.28) 40%,rgba(60,210,255,.2) 51%,transparent 66%);animation:ntA 16s ease-in-out infinite alternate}
+[data-theme=aurora] .bg::after{inset:-30%;background:linear-gradient(75deg,transparent 32%,rgba(143,123,255,.24) 48%,rgba(77,255,176,.12) 57%,transparent 72%);animation:ntB 21s ease-in-out infinite alternate}
+@keyframes ntA{from{transform:translateX(-12%) skewX(-10deg);opacity:.55}to{transform:translateX(12%) skewX(8deg);opacity:1}}
+@keyframes ntB{from{transform:translateX(14%) skewX(9deg);opacity:1}to{transform:translateX(-10%) skewX(-7deg);opacity:.5}}
+[data-theme=sunset]{--bg:#1a0a24;--card:rgba(34,12,38,.78);--tx:#fff1ea;--mut:#d6a6ae;--ac:#ff8a5c;--ac2:#ffd36b}
+[data-theme=sunset] .bg{background:linear-gradient(180deg,#14072a 0,#3a1148 38%,#8a2b4f 68%,#d9593f 100%)}
+[data-theme=sunset] .bg::before{inset:auto -10% -22% -10%;height:70%;background:radial-gradient(circle at 50% 100%,rgba(255,211,107,.95) 0 14%,rgba(255,138,92,.55) 15%,rgba(255,138,92,.18) 34%,transparent 58%);animation:ntSun 12s ease-in-out infinite alternate}
+[data-theme=sunset] .bg::after{background:radial-gradient(ellipse 260px 34px at 20% 30%,rgba(255,190,170,.18),transparent 70%),radial-gradient(ellipse 340px 40px at 70% 22%,rgba(255,170,150,.14),transparent 70%),radial-gradient(ellipse 220px 28px at 45% 48%,rgba(255,210,180,.13),transparent 70%);background-size:900px 100%;background-repeat:repeat-x;animation:ntCloud 70s linear infinite}
+@keyframes ntSun{from{transform:translateY(6%) scale(.95)}to{transform:translateY(-6%) scale(1.06)}}
+@keyframes ntCloud{to{background-position:900px 0}}
+[data-theme=frost]{--bg:#06121b;--card:rgba(10,30,44,.74);--tx:#eaf8ff;--mut:#8fb4c8;--ac:#7fdcff;--ac2:#d4f1ff}
+[data-theme=frost] .bg{background:radial-gradient(800px at 85% -5%,rgba(127,220,255,.22),transparent),radial-gradient(700px at 0 105%,rgba(160,200,255,.12),transparent),linear-gradient(180deg,#06121b,#0b2233)}
+[data-theme=frost] .bg::before{background-image:radial-gradient(2px 2px at 40px 50px,rgba(220,245,255,.9),transparent),radial-gradient(1.5px 1.5px at 170px 140px,rgba(170,225,255,.8),transparent),radial-gradient(2.5px 2.5px at 260px 250px,rgba(255,255,255,.85),transparent);background-size:300px 300px;animation:ntFlake 28s linear infinite}
+[data-theme=frost] .bg::after{inset:-50%;background:linear-gradient(115deg,transparent 42%,rgba(200,240,255,.07) 47%,rgba(210,245,255,.2) 50%,rgba(200,240,255,.07) 53%,transparent 58%);animation:ntSweep 12s ease-in-out infinite alternate}
+@keyframes ntFlake{to{background-position:300px 300px}}
+[data-theme=toxic]{--bg:#050804;--card:rgba(10,18,8,.76);--tx:#efffe0;--mut:#93ae7a;--ac:#c6ff00;--ac2:#00ffa3}
+[data-theme=toxic] .bg{background:radial-gradient(700px 400px at 50% 112%,rgba(198,255,0,.16),transparent 70%),radial-gradient(500px at 100% 0,rgba(0,255,163,.08),transparent),#050804}
+[data-theme=toxic] .bg::before{background:linear-gradient(rgba(198,255,0,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(198,255,0,.1) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(ellipse at 50% 45%,#000 20%,transparent 80%);mask-image:radial-gradient(ellipse at 50% 45%,#000 20%,transparent 80%);animation:ntGrid 14s linear infinite}
+[data-theme=toxic] .bg::after{inset:-100% 0 auto 0;height:100%;background:linear-gradient(180deg,transparent,rgba(198,255,0,.1) 85%,rgba(198,255,0,.3) 99%,transparent);animation:ntScan 7s linear infinite}
+@keyframes ntGrid{to{background-position:56px 56px}}
+@keyframes ntScan{to{transform:translateY(200%)}}
+html[data-mode=light][data-theme=toxic] .bg::after{inset:0;height:auto}
+[data-theme=gold]{--bg:#0b0804;--card:rgba(24,18,8,.76);--tx:#fff6e0;--mut:#b9a57a;--ac:#f5c451;--ac2:#fff0b3}
+[data-theme=gold] .bg{background:radial-gradient(900px at 50% -10%,rgba(245,196,81,.17),transparent 70%),radial-gradient(600px at 0 100%,rgba(190,130,40,.12),transparent),#0b0804}
+[data-theme=gold] .bg::before{inset:-50%;background:linear-gradient(115deg,transparent 38%,rgba(255,225,140,.07) 45%,rgba(255,235,170,.24) 50%,rgba(255,225,140,.07) 55%,transparent 62%);animation:ntSweep 10s ease-in-out infinite alternate}
+[data-theme=gold] .bg::after{background-image:radial-gradient(circle,rgba(255,224,130,.9) 1px,transparent 2px),radial-gradient(circle,rgba(245,196,81,.7) 1.5px,transparent 2.5px),radial-gradient(circle,rgba(255,244,200,.6) 1px,transparent 2px);background-size:150px 210px,230px 280px,90px 140px;background-position:0 0,70px 90px,30px 50px;animation:ntRise 36s linear infinite}
+@keyframes ntRise{to{background-position:0 -420px,70px -560px,30px -280px}}
 html[data-fx=off] .bg::before,html[data-fx=off] .bg::after{animation:none}
-/* лёгкий режим: без canvas-фонов, размытий и анимаций фона */
-html[data-lite=on] .m1zf,html[data-lite=on] .vhs,html[data-lite=on] .ambient{display:none!important}
-html[data-lite=on] .bg::before,html[data-lite=on] .bg::after{animation:none!important}
-html[data-lite=on] .card,html[data-lite=on] header{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-html[data-lite=on] body.live .stage{box-shadow:none}
-html[data-lite=on][data-theme=m1z]{--card:rgba(13,13,15,.8)}
+html[data-fx=off] .card,html[data-fx=off] header{backdrop-filter:none;-webkit-backdrop-filter:none}
 
 /* retro: VHS / старый телик */
 .vhs{position:absolute;inset:0;display:none;pointer-events:none;overflow:hidden}
@@ -255,7 +281,6 @@ button:focus-visible,a.lnk:focus-visible{outline:2px solid var(--ac2);outline-of
 .disc{flex:none;width:58px;height:58px;border-radius:50%;background:radial-gradient(circle,var(--ac) 0 14%,#111 15% 17%,transparent 18%),repeating-radial-gradient(circle,#0b0b0b 0 2px,#1c1c1c 3px 4px),#111;box-shadow:0 0 18px -4px var(--ac);animation:spin 3s linear infinite;animation-play-state:paused}
 body.live .disc{animation-play-state:running}
 body.live .stage{box-shadow:0 0 0 1px color-mix(in srgb,var(--ac) 45%,transparent),0 0 40px -10px var(--ac)}
-body.live .ambient{animation:amb 4s ease-in-out infinite alternate}
 @keyframes amb{from{opacity:.4}to{opacity:.72}}
 #pp{width:46px;height:46px;border-radius:50%;padding:0;font-size:18px;border:0;color:#1a1008;background:linear-gradient(135deg,var(--ac),var(--ac2));box-shadow:0 4px 18px -4px var(--ac)}
 #pp:hover:not(:disabled){transform:scale(1.1)}
@@ -274,12 +299,33 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border:0;border-radiu
 .tags .tg.qp{opacity:.85}
 .item[draggable=true]{cursor:grab}.item.drag{opacity:.4}.item.over{box-shadow:inset 0 2px 0 var(--ac)}
 #brk.on{background:var(--ac);color:#111}
+/* настройки: разделы-закладки */
+.sheet details{border:1px solid var(--ln);border-radius:14px;margin:8px 0;background:var(--in)}
+.sheet summary{cursor:pointer;list-style:none;padding:12px 14px;font-weight:700;display:flex;align-items:center;gap:10px;user-select:none}
+.sheet summary::-webkit-details-marker{display:none}
+.sheet summary::after{content:"▸";margin-left:auto;opacity:.6;transition:transform .15s}
+.sheet details[open]>summary::after{transform:rotate(90deg)}
+.sheet details[open]>summary{border-bottom:1px solid var(--ln)}
+.sheet summary small{font-weight:400;color:var(--mut);font-size:12px}
+.sheet .sb{padding:6px 14px 12px}
+.sheet h4.sh{margin:14px 0 4px;font-size:11.5px;text-transform:uppercase;letter-spacing:1.4px;color:var(--ac2)}
+.sheet .tools{display:flex;gap:8px;margin:10px 0 2px}
+.fld input[type=color]{width:46px;height:34px;padding:2px;border-radius:8px;border:1px solid var(--ln);background:var(--in);cursor:pointer}
+.fld input[type=number]{width:96px}
+.don{color:var(--ac2);font-weight:800}
+html[data-hs=on] #lstat,html[data-hh=on] #hcard,html[data-hk=on] .kbd{display:none}
+/* лёгкий режим (слабые устройства): без анимаций, размытия, теней и фоновых эффектов */
+html[data-lite=on] *,html[data-lite=on] *::before,html[data-lite=on] *::after{animation:none!important;transition:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;text-shadow:none!important}
+html[data-lite=on] .bg::before,html[data-lite=on] .bg::after,html[data-lite=on] .ambient,html[data-lite=on] .vhs,html[data-lite=on] .m1zf{display:none!important}
+html[data-lite=on] .bg{background:var(--bg)!important}
+html[data-lite=on] .card,html[data-lite=on] .modal{box-shadow:none!important}
+html[data-lite=on][data-theme=m1z]{--card:rgba(13,13,15,.8)}
 html[data-compact=on] main{grid-template-columns:1fr;max-width:520px;padding:10px;gap:10px}
 html[data-compact=on] .kbd,html[data-compact=on] .ambient{display:none}
 html[data-compact=on] header{padding:8px 12px}
 html[data-compact=on] .card{padding:12px}
 .spark{margin:6px 0 2px}
-#soon.on{background:var(--ac);color:#111}
+#soon.on,#fin.on,#chbtn.on{background:var(--ac);color:#111}
 .tags{display:flex;flex-direction:column;gap:10px;margin:12px 0}
 .tgr{display:flex;align-items:center;gap:12px}
 .tgl{flex:none;width:88px;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--mut);line-height:1.2}
@@ -301,7 +347,7 @@ html[data-mode=light] button:hover:not(:disabled){background:rgba(0,0,0,.06)}
 <header>
   <div class="logo"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>M1Z<b>.FM</b></div>
   <div class="stats" id="stats"></div>
-  <div class="hr"><span class="air" id="bl" style="display:none">🕶 СЛЕПОЕ</span><span class="air" id="air">● ON AIR</span><button id="brk" class="ghost" title="Перерыв (K)">☕</button><button id="soon" class="ghost" title="Скоро начнём (L)">⏳</button><button id="sum" class="ghost">🏆 Итоги</button><button id="exp" class="ghost">📋 Плейлист</button><button id="gear" class="ghost" title="Настройки" aria-label="Настройки">⚙️</button></div>
+  <div class="hr"><span class="air" id="bl" style="display:none">🕶 СЛЕПОЕ</span><span class="air" id="air">● ON AIR</span><button id="brk" class="ghost" title="Перерыв (K)">☕</button><button id="soon" class="ghost" title="Скоро начнём (L)">⏳</button><button id="fin" class="ghost" title="Конец стрима: итоги вечера в оверлее (E)">🏁</button><button id="chbtn" class="ghost" title="Чат в оверлее: показать / убрать (C)">💬</button><button id="sum" class="ghost">🏆 Итоги</button><button id="exp" class="ghost">📋 Плейлист</button><button id="gear" class="ghost" title="Настройки" aria-label="Настройки">⚙️</button></div>
 </header>
 <main>
   <section class="col">
@@ -333,46 +379,95 @@ html[data-mode=light] button:hover:not(:disabled){background:rgba(0,0,0,.06)}
     <div class="card pend" id="pcard" hidden><h2>На проверке <span id="pc"></span></h2><div id="pend"></div></div>
     <div class="card"><h2>Очередь <span id="qc"></span></h2><div id="queue"></div></div>
     <div class="card" id="lstat"><h2>Статистика эфира</h2><div id="lsb"></div></div>
-    <div class="card"><h2>История эфира</h2><div class="hist" id="hist"></div></div>
-    <div class="kbd"><kbd>N</kbd> следующий · <kbd>Пробел</kbd> пауза · <kbd>1</kbd>–<kbd>9</kbd>, <kbd>0</kbd> оценка (0 = 10) · <kbd>P</kbd> плейлист · <kbd>S</kbd> пропуск · <kbd>O</kbd> открыть · <kbd>↑</kbd><kbd>↓</kbd> громкость · <kbd>M</kbd> звук · <kbd>B</kbd> слепой режим · <kbd>T</kbd> тема</div>
+    <div class="card" id="hcard"><h2>История эфира</h2><div class="hist" id="hist"></div></div>
+    <div class="kbd"><kbd>N</kbd> следующий · <kbd>Пробел</kbd> пауза · <kbd>1</kbd>–<kbd>9</kbd>, <kbd>0</kbd> оценка (0 = 10) · <kbd>P</kbd> плейлист · <kbd>S</kbd> пропуск · <kbd>O</kbd> открыть · <kbd>↑</kbd><kbd>↓</kbd> громкость · <kbd>M</kbd> звук · <kbd>B</kbd> слепой режим · <kbd>T</kbd> тема · <kbd>E</kbd> конец стрима · <kbd>C</kbd> чат в оверлее</div>
   </section>
 </main>
 <div class="modal" id="modal"><div class="sheet">
   <div class="shh">Настройки <button id="mclose" class="ghost">✕</button></div>
-  <h3>Тема</h3><div class="tgrid" id="tgrid"></div>
-  <div class="fld"><label for="c-fxbg">Анимированный фон</label><input type="checkbox" id="c-fxbg"></div>
-  <div class="fld"><label for="c-fxb">Эффекты на оценки 9–10</label><input type="checkbox" id="c-fxb"></div>
-  <h3>Эфир</h3>
-  <div class="fld"><label for="c-blind">Слепое прослушивание<small>ник скрыт до оценки · клавиша B</small></label><input type="checkbox" id="c-blind"></div>
-  <div class="fld"><label for="c-snd">Звуки<small>джингл, аплодисменты на 9, эйрхорн на 10</small></label><select id="c-snd"><option value="panel">В панели</option><option value="overlay">В оверлее (OBS)</option><option value="off">Выкл</option></select></div>
-  <div class="fld"><label for="c-sndv">Громкость звуков</label><input type="range" id="c-sndv" min="0" max="100" step="5"></div>
-  <div class="row"><button id="t-j">▶ Джингл</button><button id="t-a">▶ Аплодисменты</button><button id="t-h">▶ Эйрхорн</button><button id="t-f">▶ Фейл</button></div>
-  <h3>Чат Twitch</h3>
-  <div class="fld"><label for="c-bot">Принимать заявки из чата</label><input type="checkbox" id="c-bot"></div>
-  <div class="fld"><label for="c-chan">Канал</label><input type="text" id="c-chan" placeholder="например, m1z_qq"></div>
-  <div class="fld"><label for="c-cmds">Команды</label><input type="text" id="c-cmds"></div>
-  <div class="fld"><label for="c-maxq">Заявок от зрителя в очереди</label><input type="number" id="c-maxq" min="1" max="20"></div>
-  <div class="fld"><label for="c-cd">Пауза между заявками, сек</label><input type="number" id="c-cd" min="0" max="600"></div>
-  <div class="fld"><label for="c-maxmin">Лимит длины трека, мин<small>0 — без лимита; проверяется для YouTube, у остальных длина неизвестна</small></label><input type="number" id="c-maxmin" min="0" max="120"></div>
-  <div class="fld"><label for="c-lenskip">Пропускать треки длиннее лимита<small>выключено — только предупреждение</small></label><input type="checkbox" id="c-lenskip"></div>
-      <div class="fld"><label for="c-compact">Компактная панель<small>одна колонка, без подсказок и подсветки: удобно для маленького окна</small></label><input type="checkbox" id="c-compact"></div>
-  <div class="fld"><label for="c-lite">Лёгкий режим<small>если панель тормозит: без анимированного фона, размытий и свечения плеера</small></label><input type="checkbox" id="c-lite"></div>
-  <div class="fld"><label for="c-mode">Тема оформления<small>тёмная, светлая или как в системе · клавиша D</small></label><select id="c-mode"><option value="dark">Тёмная</option><option value="light">Светлая</option><option value="auto">Как в системе</option></select></div>
-  <div class="hint"><span class="dot" id="tw-dot"></span><span id="tw-st">выключено</span> · читает чат анонимно, отвечать не умеет. Пример: <b>!заказ Artist - Song</b></div>
-  <div class="hint" id="tw-last"></div>
-  <h3>Фильтры</h3>
-  <div class="fld"><label for="c-bann">Чёрный список ников</label><input type="text" id="c-bann" placeholder="через запятую"></div>
-  <div class="fld"><label for="c-banw">Запрещённые слова</label><input type="text" id="c-banw" placeholder="через запятую"></div>
-  <div class="fld"><label for="c-conf">Проверять подозрительные заявки<small>чужой сайт, несколько ссылок, длинный текст</small></label><input type="checkbox" id="c-conf"></div>
-  <h3>OBS-оверлей</h3>
-  <div class="fld"><label for="c-ovq">«Далее в эфире» в оверлее</label><input type="checkbox" id="c-ovq"></div>
-  <div class="row"><button id="ov-copy">📋 Ссылка для Browser Source</button><button id="ov-win">🪟 Окно с зелёным фоном</button></div>
-  <div class="hint"><span class="dot" id="ov-dot"></span><span id="ov-st">…</span> · В OBS: Sources → + → Browser, вставь ссылку, размер 1920×1080. Панель должна быть открыта.</div>
-  <h3>Плейлист</h3>
-  <div class="fld"><label for="c-clean">Чистить названия<small>убирает Official Video, Lyrics и т. п.</small></label><input type="checkbox" id="c-clean"></div>
-  <div class="fld"><label for="c-copy">Копировать как</label><select id="c-copy"><option value="names">Исполнитель – Название</option><option value="links">Ссылки</option></select></div>
-  <h3>Данные</h3>
-  <div class="row"><button id="d-exp">⬇ Экспорт</button><button id="d-imp">⬆ Импорт</button><button id="clr">🗑 Новый эфир</button><button id="clr-all" title="Очередь, история, архив и итоги — всё в ноль. Настройки и тема останутся.">🧨 Очистить всё</button><input type="file" id="d-file" accept="application/json" hidden></div>
+  <div class="hint" style="margin:6px 0 4px">Разделы свёрнуты: открой нужный, настрой и закрой.</div>
+
+  <details><summary>🎨 Внешний вид <small>тема, цвет, масштаб, что показывать</small></summary><div class="sb">
+    <h4 class="sh">Тема</h4><div class="tgrid" id="tgrid"></div>
+    <div class="fld"><label for="c-mode">Светлая / тёмная<small>клавиша D</small></label><select id="c-mode"><option value="dark">Тёмная</option><option value="light">Светлая</option><option value="auto">Как в системе</option></select></div>
+    <div class="fld"><label for="c-accent">Свой цвет акцента<small>перекрашивает панель и оверлей поверх темы</small></label><input type="color" id="c-accent" value="#ff3341"><button id="ac-rst">Сбросить</button></div>
+    <div class="fld"><label for="c-scale">Масштаб панели, %<small>70–140, по умолчанию 100</small></label><input type="range" id="c-scale" min="70" max="140" step="5"></div>
+    <h4 class="sh">Что показывать</h4>
+    <div class="fld"><label for="c-hs">Скрыть «Статистика эфира»</label><input type="checkbox" id="c-hs"></div>
+    <div class="fld"><label for="c-hh">Скрыть «История эфира»</label><input type="checkbox" id="c-hh"></div>
+    <div class="fld"><label for="c-hk">Скрыть подсказку по клавишам</label><input type="checkbox" id="c-hk"></div>
+    <div class="fld"><label for="c-compact">Компактная панель<small>одна колонка: удобно для маленького окна</small></label><input type="checkbox" id="c-compact"></div>
+    <h4 class="sh">Производительность</h4>
+    <div class="fld"><label for="c-lite">Лёгкий режим<small>для слабых устройств: без анимаций и размытия, показ вкладки 720p, оверлей без конфетти</small></label><input type="checkbox" id="c-lite"></div>
+    <div class="fld"><label for="c-fxbg">Анимированный фон</label><input type="checkbox" id="c-fxbg"></div>
+    <div class="fld"><label for="c-fxb">Эффекты на оценки 9–10 в панели</label><input type="checkbox" id="c-fxb"></div>
+  </div></details>
+
+  <details><summary>🎙 Эфир и оценки <small>теги, комментарии, донаты</small></summary><div class="sb">
+    <div class="fld"><label for="c-blind">Слепое прослушивание<small>ник скрыт до оценки · клавиша B</small></label><input type="checkbox" id="c-blind"></div>
+    <h4 class="sh">Теги настроения</h4>
+    <div class="fld"><label for="c-tags">Список тегов<small>через запятую, в формате «эмодзи Название». До 16 штук</small></label><input type="text" id="c-tags"></div>
+    <div class="fld"><label for="c-qp">Быстрые комментарии<small>через запятую, добавляются в заметку к треку одним нажатием</small></label><input type="text" id="c-qp"></div>
+    <div class="tools"><button id="tg-rst">Вернуть списки по умолчанию</button></div>
+    <h4 class="sh">Донаты</h4>
+    <div class="fld"><label for="c-don">Слово-метка доната<small>если в комментарии к заявке есть это слово (можно несколько через запятую), трек встаёт первым в очереди и играет сразу после текущего и его оценки. Пусто — выключено. Кнопка $ у трека в очереди делает то же вручную</small></label><input type="text" id="c-don"></div>
+  </div></details>
+
+  <details><summary>💬 Чат Twitch (заявки) <small>команды, лимиты</small></summary><div class="sb">
+    <div class="fld"><label for="c-bot">Принимать заявки из чата</label><input type="checkbox" id="c-bot"></div>
+    <div class="fld"><label for="c-chan">Канал</label><input type="text" id="c-chan" placeholder="например, m1z_qq"></div>
+    <div class="fld"><label for="c-cmds">Команды</label><input type="text" id="c-cmds"></div>
+    <div class="fld"><label for="c-maxq">Заявок от зрителя в очереди</label><input type="number" id="c-maxq" min="1" max="20"></div>
+    <div class="fld"><label for="c-cd">Пауза между заявками, сек</label><input type="number" id="c-cd" min="0" max="600"></div>
+    <div class="hint"><span class="dot" id="tw-dot"></span><span id="tw-st">выключено</span> · читает чат анонимно, отвечать не умеет. Пример: <b>!заказ Artist - Song</b></div>
+    <div class="hint" id="tw-last"></div>
+  </div></details>
+
+  <details><summary>🛡 Фильтры и лимиты <small>чёрный список, длина трека</small></summary><div class="sb">
+    <div class="fld"><label for="c-bann">Чёрный список ников</label><input type="text" id="c-bann" placeholder="через запятую"></div>
+    <div class="fld"><label for="c-banw">Запрещённые слова</label><input type="text" id="c-banw" placeholder="через запятую"></div>
+    <div class="fld"><label for="c-conf">Проверять подозрительные заявки<small>чужой сайт, несколько ссылок, длинный текст</small></label><input type="checkbox" id="c-conf"></div>
+    <div class="fld"><label for="c-maxmin">Лимит длины трека, мин<small>0 — без лимита; проверяется для YouTube</small></label><input type="number" id="c-maxmin" min="0" max="120"></div>
+    <div class="fld"><label for="c-lenskip">Пропускать треки длиннее лимита<small>выключено — только предупреждение</small></label><input type="checkbox" id="c-lenskip"></div>
+  </div></details>
+
+  <details><summary>🔊 Звуки <small>джингл, аплодисменты, громкость</small></summary><div class="sb">
+    <div class="fld"><label for="c-snd">Где играть звуки<small>джингл, аплодисменты на 9, эйрхорн на 10, фейл на 1</small></label><select id="c-snd"><option value="panel">В панели</option><option value="overlay">В оверлее (OBS)</option><option value="off">Выкл</option></select></div>
+    <div class="fld"><label for="c-sndv">Громкость звуков</label><input type="range" id="c-sndv" min="0" max="100" step="5"></div>
+    <div class="row"><button id="t-j">▶ Джингл</button><button id="t-a">▶ Аплодисменты</button><button id="t-h">▶ Эйрхорн</button><button id="t-f">▶ Фейл</button></div>
+  </div></details>
+
+  <details><summary>📺 OBS-оверлей <small>ссылка, показ вкладки, эффекты</small></summary><div class="sb">
+    <div class="row"><button id="ov-copy">📋 Ссылка для Browser Source</button><button id="ov-win">🪟 Окно с зелёным фоном</button></div>
+    <div class="hint"><span class="dot" id="ov-dot"></span><span id="ov-st">…</span> · В OBS: Sources → + → Browser, вставь ссылку, размер 1920×1080. Панель должна быть открыта.</div>
+    <div class="fld"><label for="c-ovq">«Далее в эфире» в оверлее</label><input type="checkbox" id="c-ovq"></div>
+    <div class="fld"><label for="c-ovlogo">Логотип в оверлее<small>после смены скопируй ссылку для OBS заново</small></label><input type="checkbox" id="c-ovlogo"></div>
+    <div class="fld"><label for="c-ovfx">Конфетти, дождь и вспышка на 9–10<small>в оверлее</small></label><input type="checkbox" id="c-ovfx"></div>
+    <h4 class="sh">Показ вкладки браузера</h4>
+    <div class="row"><button id="ov-scr">📺 Показать мою вкладку</button></div>
+    <div class="fld"><label for="c-scrw">Ширина окна показа, px<small>по умолчанию 880, от 400 до 1700</small></label><input type="number" id="c-scrw" min="400" max="1700" step="20"></div>
+    <div class="fld"><label for="c-scra">Звук вкладки<small>в окне выбора вкладки отметь «Поделиться звуком вкладки». Клавиша V включает и выключает показ</small></label><input type="checkbox" id="c-scra"></div>
+  </div></details>
+
+  <details><summary>🗨 Чат в оверлее <small>вкл/выкл, ссылка, размер и положение</small></summary><div class="sb">
+    <div class="fld"><label for="c-ovchat">Показывать чат в оверлее<small>клавиша C или кнопка 💬 в шапке</small></label><input type="checkbox" id="c-ovchat"></div>
+    <div class="fld"><label for="c-churl">Ссылка на чат<small>адрес оверлея чата (chat.eblo.id, Chatterino и т.п., только https). Пусто — стандартный чат m1z_qq. Меняется в оверлее сразу</small></label><input type="text" id="c-churl" placeholder="https://chat.eblo.id/chat/overlay/?channel=…"></div>
+    <div class="row"><button id="ch-ref">↻ Обновить чат в оверлее</button><button id="ch-rst">Сбросить на стандартный</button></div>
+    <h4 class="sh">Размер и положение (px на экране 1920×1080)</h4>
+    <div class="fld"><label for="c-chx">Слева (X)</label><input type="number" id="c-chx" min="-2000" max="2000" step="10"></div>
+    <div class="fld"><label for="c-chy">Сверху (Y)</label><input type="number" id="c-chy" min="-2000" max="2000" step="10"></div>
+    <div class="fld"><label for="c-chw">Ширина</label><input type="number" id="c-chw" min="200" max="1920" step="10"></div>
+    <div class="fld"><label for="c-chh">Высота</label><input type="number" id="c-chh" min="150" max="1080" step="10"></div>
+  </div></details>
+
+  <details><summary>📋 Плейлист</summary><div class="sb">
+    <div class="fld"><label for="c-clean">Чистить названия<small>убирает Official Video, Lyrics и т. п.</small></label><input type="checkbox" id="c-clean"></div>
+    <div class="fld"><label for="c-copy">Копировать как</label><select id="c-copy"><option value="names">Исполнитель – Название</option><option value="links">Ссылки</option></select></div>
+  </div></details>
+
+  <details><summary>💾 Данные <small>экспорт, импорт, очистка</small></summary><div class="sb">
+    <div class="row"><button id="d-exp">⬇ Экспорт</button><button id="d-imp">⬆ Импорт</button><button id="clr">🗑 Новый эфир</button><button id="clr-all" title="Очередь, история, архив и итоги — всё в ноль. Настройки и тема останутся.">🧨 Очистить всё</button><input type="file" id="d-file" accept="application/json" hidden></div>
+  </div></details>
 </div></div>
 <div class="modal" id="smodal"><div class="sheet wide">
   <div class="shh">Итоги вечера <button id="sclose" class="ghost">✕</button></div>
@@ -402,7 +497,7 @@ const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&g
 const isUrl=s=>/^https?:\/\//i.test(s);
 let vol=ls.get("m1z_vol")!==null?+ls.get("m1z_vol"):50,muted=false,player=null,ytReady=false,pending=null,playing=false;
 const ytId=u=>((u||"").match(/(?:youtu\.be\/|[?&]v=|embed\/|shorts\/)([\w-]{11})/)||[])[1];
-const THEMES=[["m1z","M1z","linear-gradient(135deg,#09090a,#3a3a42,#ff3341)"],["neon","Неон","linear-gradient(135deg,#2a0a5e,#ff2bd6 55%,#00e5ff)"],["space","Космос","linear-gradient(135deg,#050816,#7c9cff,#c39bff)"],["lagoon","Лагуна","linear-gradient(135deg,#06201f,#2fe3b0,#6ad6ff)"],["sakura","Сакура","linear-gradient(135deg,#1d0f18,#ff7eb6,#ffc2dd)"],["matrix","Матрица","linear-gradient(135deg,#020a05,#00ff7f)"],["retro","Ретро VHS","linear-gradient(135deg,#060508,#2a1a46,#b79cff)"],["volcano","Вулкан","linear-gradient(135deg,#1a0707,#ff3b3b 60%,#ff9a8a)"],["platinum","Платина","linear-gradient(135deg,#0b0c10,#e4e8f0 70%,#8a94a8)"],["stage","Сцена","linear-gradient(135deg,#100d04,#ffe11a 60%,#fff59a)"]];
+const THEMES=[["m1z","M1Z","linear-gradient(135deg,#09090a,#3a3a42,#ff3341)"],["neon","Неон","linear-gradient(135deg,#2a0a5e,#ff2bd6 55%,#00e5ff)"],["space","Космос","linear-gradient(135deg,#050816,#7c9cff,#c39bff)"],["lagoon","Лагуна","linear-gradient(135deg,#06201f,#2fe3b0,#6ad6ff)"],["sakura","Сакура","linear-gradient(135deg,#1d0f18,#ff7eb6,#ffc2dd)"],["matrix","Матрица","linear-gradient(135deg,#020a05,#00ff7f)"],["retro","Ретро VHS","linear-gradient(135deg,#060508,#2a1a46,#b79cff)"],["volcano","Вулкан","linear-gradient(135deg,#1a0707,#ff3b3b 60%,#ff9a8a)"],["platinum","Платина","linear-gradient(135deg,#0b0c10,#e4e8f0 70%,#8a94a8)"],["stage","Сцена","linear-gradient(135deg,#100d04,#ffe11a 60%,#fff59a)"],["aurora","Аврора","linear-gradient(135deg,#030a14,#4dffb0 55%,#8f7bff)"],["sunset","Закат","linear-gradient(135deg,#14072a,#8a2b4f 50%,#ff8a5c)"],["frost","Мороз","linear-gradient(135deg,#06121b,#7fdcff 60%,#d4f1ff)"],["toxic","Токсик","linear-gradient(135deg,#050804,#c6ff00 60%,#00ffa3)"],["gold","Золото","linear-gradient(135deg,#0b0804,#f5c451 60%,#fff0b3)"]];
 let theme=ls.get("m1z_theme")||"m1z";if(!THEMES.some(t=>t[0]===theme))theme="m1z";
 function setTheme(t){theme=t;document.documentElement.dataset.theme=t;ls.set("m1z_theme",t);bcast();document.querySelectorAll(".tc").forEach(b=>b.classList.toggle("on",b.dataset.t===t))}
 function toast(t){const o=$("toast");o.textContent=t;o.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>o.classList.remove("show"),1600)}
@@ -431,7 +526,7 @@ function stageMsg(h){const st=$("stage");st.classList.add("auto");st.innerHTML='
 const decHtml=s=>{const t=document.createElement("textarea");t.innerHTML=s;return t.value};
 function embedFail(){
   const c=S.current;
-  stageMsg('Автор запретил встраивать это видео.<br>Иногда помогает обновить плеер, или нажми <b>O</b> — трек откроется на YouTube.<div class="row" style="justify-content:center;margin-top:10px"><button data-retry="1">↻ Обновить плеер</button><button data-open="1">↗ Открыть в новой вкладке</button></div>');
+  stageMsg('Автор запретил встраивать это видео.<br>Иногда помогает обновить плеер, или нажми <b>O</b> — трек откроется на YouTube.<div class="row" style="justify-content:center;margin-top:10px"><button data-retry="1">↻ Обновить плеер</button><button data-open="1">↗ Открыть в новой вкладке</button><button data-scr="1">📺 Открыть и показать в оверлее</button></div>');
   if(c){c.noemb=true;save();coverFor(c,true)}
 }
 function grab(){try{const d=player.getVideoData(),c=S.current;if(!d||!c||!d.title)return;if(!c.title||(!c.author&&d.author)){c.title=c.title||d.title;c.author=c.author||d.author||"";c.name=plName(c);save();renderNow(false);renderLists()}}catch(e){}}
@@ -461,9 +556,13 @@ const LBL=n=>n<=3?"Мимо":n<=5?"Нормально":n<=7?"Хорошо":n<=9?
 const col=n=>`hsl(${(n-1)*13} 85% 58%)`;
 $("rate").innerHTML=[1,2,3,4,5,6,7,8,9,10].map(n=>`<button data-r="${n}" style="color:${col(n)}">${n}</button>`).join("");
 let votes={},brk={on:false,until:0};
-const TAGS=[["🔥","Качает"],["💤","Скучный"],["😄","Весёлый"],["👎","Не очень"],["⚖️","50/50"]],QP=["Добавлен в плейлист","Прикольный","Мимо"];
+let TAGS=[],QP=[];
+const TAG_DEF="🔥 Качает, 💤 Скучный, 😄 Весёлый, 😢 Грустный, 😎 Прикольный, 👎 Не очень, ⚖️ 50/50",QP_DEF="Добавлен в плейлист, Прикольный, Мимо, Не зацепило";
+function parseLists(){const emo=/^[^\p{L}\p{N}]+$/u;
+  TAGS=String(cfg.tagList||"").split(",").map(s=>s.trim()).filter(Boolean).map(s=>{const m=s.match(/^(\S+)\s+(.+)$/);return m&&emo.test(m[1])?[m[1],m[2].trim()]:["",s]}).slice(0,16);
+  QP=String(cfg.qpList||"").split(",").map(s=>s.trim()).filter(Boolean).slice(0,16)}
 function renderTags(){const c=S.current,on=t=>c&&(c.tags||[]).includes(t),d=c?"":" disabled";
-  $("tags").innerHTML=`<div class="tgr"><span class="tgl">Настроение</span><div class="tgs">${TAGS.map(([e,t])=>`<button class="tg${on(t)?" on":""}" data-tag="${t}"${d}><i>${e}</i>${t}</button>`).join("")}</div></div><div class="tgr"><span class="tgl">Быстрый комментарий</span><div class="tgs">${QP.map(q=>`<button class="tg qp" data-qp="${q}"${d}>${q}</button>`).join("")}</div></div>`}
+  $("tags").innerHTML=`<div class="tgr"><span class="tgl">Настроение</span><div class="tgs">${TAGS.map(([e,t])=>`<button class="tg${on(t)?" on":""}" data-tag="${esc(t)}"${d}>${e?`<i>${esc(e)}</i>`:""}${esc(t)}</button>`).join("")}</div></div><div class="tgr"><span class="tgl">Быстрый комментарий</span><div class="tgs">${QP.map(q=>`<button class="tg qp" data-qp="${esc(q)}"${d}>${esc(q)}</button>`).join("")}</div></div>`}
 function renderNow(resetNote){
   const c=S.current;
   $("ttl").textContent=c?plName(c):"Ничего не играет";
@@ -480,13 +579,21 @@ function renderLists(){
   $("pcard").hidden=!S.pending.length;$("pc").textContent=S.pending.length||"";
   $("pend").innerHTML=S.pending.map(x=>`<div class="item"><div style="min-width:0"><div class="t">${esc(x.text)}</div><div class="m">${cfg.blind?"???":"@"+esc(x.nick)}</div></div><div class="row" style="flex-wrap:nowrap"><button data-ok="${x.id}" title="Принять">✓</button><button data-no="${x.id}" title="Отклонить">✕</button><button data-ban="${x.id}" title="В чёрный список">🚫</button></div></div>`).join("");
   const q=S.queue;$("qc").textContent=q.length?q.length:"";$("nx").classList.toggle("ping",!!q.length&&!S.current);
-  $("queue").innerHTML=q.length?q.map(x=>`<div class="item" draggable="true" data-qid="${x.id}"><div style="min-width:0"><div class="t">${x.vip?"⭐ ":""}${esc(x.text)}</div><div class="m">${cfg.blind?"@???":"@"+esc(x.nick)}${x.comment?" · "+esc(x.comment):""}</div></div><div class="row" style="flex-wrap:nowrap"><button data-vip="${x.id}" title="VIP: вперёд очереди (можно и перетаскивать)">${x.vip?"★":"☆"}</button><button data-go="${x.id}" title="Играть сейчас">▶</button><button data-d="${x.id}" title="Удалить">✕</button><button data-ban="${x.id}" title="В чёрный список">🚫</button></div></div>`).join(""):'<div class="empty">Очередь пуста — добавь заявку из чата.</div>';
+  $("queue").innerHTML=q.length?q.map(x=>`<div class="item" draggable="true" data-qid="${x.id}"><div style="min-width:0"><div class="t">${x.don?"💰 ":""}${x.vip?"⭐ ":""}${esc(x.text)}</div><div class="m">${cfg.blind?"@???":"@"+esc(x.nick)}${x.comment?" · "+esc(x.comment):""}</div></div><div class="row" style="flex-wrap:nowrap"><button data-don="${x.id}" title="Донат: сыграть сразу после текущего">${x.don?"💰":"$"}</button><button data-vip="${x.id}" title="VIP: вперёд очереди (можно и перетаскивать)">${x.vip?"★":"☆"}</button><button data-go="${x.id}" title="Играть сейчас">▶</button><button data-d="${x.id}" title="Удалить">✕</button><button data-ban="${x.id}" title="В чёрный список">🚫</button></div></div>`).join(""):'<div class="empty">Очередь пуста — добавь заявку из чата.</div>';
   $("hist").innerHTML=S.history.length?S.history.map(h=>`<div class="item"><div style="min-width:0"><div class="t">${esc(plName(h))}</div><div class="m">@${esc(h.nick)}${h.note?" · "+esc(h.note):""}${h.tags&&h.tags.length?" · "+esc(h.tags.join(", ")):""}${h.vn?" · 💬 "+h.vavg:""}${h.pl?" · ♥":""}${h.skipped?" · пропущен":""}</div></div><div class="sc" style="color:${h.rating?col(h.rating):"var(--mut)"}">${h.rating??"–"}</div></div>`).join(""):'<div class="empty">Пока пусто.</div>';
   const all=[S.current,...S.history].filter(x=>x),r=all.filter(x=>x.rating);
   renderStats();$("stats").innerHTML=`Треков: <b>${all.length}</b> · Средняя оценка: <b>${r.length?(r.reduce((a,x)=>a+x.rating,0)/r.length).toFixed(1):"–"}</b>`;
 }
 function show(){renderStage();renderNow(true);renderLists();applyVol();setLive();meta(S.current)}
-function add(){const t=$("f-t").value.trim();if(!t)return;if(isDup(t))return toast("Этот трек уже есть в очереди");S.queue.push({id:Date.now()+Math.random(),text:t,nick:$("f-n").value.trim()||"аноним",comment:$("f-c").value.trim()});$("f-t").value="";$("f-c").value="";$("f-t").focus();save();renderLists();toast("Добавлено в очередь")}
+const isDon=c=>{const w=lst(cfg.donWord),t=String(c||"").toLowerCase();return w.length>0&&w.some(x=>t.includes(x))};
+function donFront(it){const i=S.queue.indexOf(it);if(i>-1)S.queue.splice(i,1);it.don=true;S.queue.splice(S.queue.filter(q=>q.don).length,0,it)}
+function add(){const t=$("f-t").value.trim();if(!t)return;const com=$("f-c").value.trim(),don=isDon(com),k=normKey(t),ex=S.queue.find(q=>normKey(q.text)===k);
+  const clr=()=>{$("f-t").value="";$("f-c").value="";$("f-t").focus();save();renderLists()};
+  if(ex&&don&&!ex.don){donFront(ex);if(com&&!ex.comment)ex.comment=com;clr();return toast("💰 Донат: трек уже был в очереди, теперь он первый")}
+  if(isDup(t))return toast("Этот трек уже есть в очереди");
+  const it={id:Date.now()+Math.random(),text:t,nick:$("f-n").value.trim()||"аноним",comment:com};
+  if(don){it.don=true;S.queue.splice(S.queue.filter(q=>q.don).length,0,it)}else S.queue.push(it);
+  clr();toast(don?"💰 Донат-трек: сыграет сразу после текущего"+(S.current&&!S.current.rating?" и его оценки":""):"Добавлено в очередь")}
 const archGet=()=>{try{const a=JSON.parse(ls.get("m1z_arch")||"[]");return Array.isArray(a)?a:[]}catch(e){return[]}};
 function archSave(){const t=[S.current,...S.history].filter(x=>x&&x.rating).map(x=>({n:plName(x),r:x.rating,nick:x.nick||"аноним",tg:x.tags||[],v:x.vavg||null}));if(!t.length)return;
   if(!S.evId)S.evId=Date.now();const a=archGet().filter(e=>e.id!==S.evId);a.push({id:S.evId,d:S.evId,t});ls.set("m1z_arch",JSON.stringify(a.slice(-60)))}
@@ -496,7 +603,7 @@ function next(){if(S.queue.length)start(S.queue.shift());else toast("Очере�
 function skip(){if(!S.current)return;finish(true);save();show()}
 function rate(n){const c=S.current;if(!c)return;c.rating=n;save();renderNow(false);renderLists();if(n===10){snd("horn");snd("applause")}else if(n===9)snd("applause");else if(n===1)snd("fail");
   const b=document.querySelector(`#rate [data-r="${n}"]`);b.classList.remove("pop");void b.offsetWidth;b.classList.add("pop");
-  if((n>=9||n===1)&&cfg.fxBurst)for(let i=0;i<12;i++){const s=document.createElement("span");s.className="burst";s.textContent=n==10?"✨":n==1?"💀":"🔥";s.style.left=Math.random()*90+"%";s.style.animationDelay=Math.random()*.4+"s";$("sw").appendChild(s);setTimeout(()=>s.remove(),1800)}}
+  if((n>=9||n===1)&&cfg.fxBurst&&!cfg.lite)for(let i=0;i<12;i++){const s=document.createElement("span");s.className="burst";s.textContent=n==10?"✨":n==1?"💀":"🔥";s.style.left=Math.random()*90+"%";s.style.animationDelay=Math.random()*.4+"s";$("sw").appendChild(s);setTimeout(()=>s.remove(),1800)}}
 function toPl(){const c=S.current;if(!c)return;c.pl=!c.pl;save();renderNow(false);toast(c.pl?"Добавлено в плейлист ♥":"Убрано из плейлиста")}
 function openTrack(){const c=S.current;if(!c)return;window.open(isUrl(c.text)?c.text:"https://www.youtube.com/results?search_query="+encodeURIComponent(c.text),"_blank","noopener")}
 document.addEventListener("click",e=>{
@@ -518,7 +625,7 @@ document.addEventListener("keydown",e=>{
   else if(k==="m")$("mute").click();
   else if(k==="arrowup"){e.preventDefault();setVol(vol+5)}else if(k==="arrowdown"){e.preventDefault();setVol(vol-5)}
   else if(k==="b"){cfg.blind=!cfg.blind;cfgSave();$("c-blind").checked=cfg.blind;applyCfg();renderNow(false);renderLists();toast(cfg.blind?"Слепой режим: вкл":"Слепой режим: выкл")}
-  else if(k==="k")brkToggle("break");else if(k==="l")brkToggle("soon");else if(k==="d"){cfg.mode=cfg.mode==="light"?"dark":"light";cfgSave();$("c-mode").value=cfg.mode;applyCfg();toast(cfg.mode==="light"?"Светлая тема":"Тёмная тема")}else if(k==="t")setTheme(THEMES[(THEMES.findIndex(t=>t[0]===theme)+1)%THEMES.length][0]);
+  else if(k==="k")brkToggle("break");else if(k==="l")brkToggle("soon");else if(k==="e")brkToggle("end");else if(k==="c")chatToggle();else if(k==="v")scrToggle();else if(k==="d"){cfg.mode=cfg.mode==="light"?"dark":"light";cfgSave();$("c-mode").value=cfg.mode;applyCfg();toast(cfg.mode==="light"?"Светлая тема":"Тёмная тема")}else if(k==="t")setTheme(THEMES[(THEMES.findIndex(t=>t[0]===theme)+1)%THEMES.length][0]);
   else if(/^[1-9]$/.test(k))rate(+k);else if(k==="0")rate(10);
 });
 $("add").onclick=add;$("nx").onclick=next;$("sk").onclick=skip;$("pl").onclick=toPl;$("op").onclick=openTrack;
@@ -535,12 +642,17 @@ function clearAll(){
   S=fixS();save();show();toast("Всё очищено ✓");return true}
 $("clr-all").onclick=()=>{if(clearAll())$("modal").classList.remove("open")};
 const CFGK="m1z_cfg";
-let cfg={chan:"",bot:false,cmds:"!заказ,!sr,!order",maxq:2,cd:30,clean:true,copy:"names",fxBg:true,fxBurst:true,ovq:true,snd:"panel",blind:false,banNicks:"",banWords:"",conf:true,sndVol:25,room:"",maxMin:8,lenSkip:true,compact:false,lite:false,mode:"dark"};
+let cfg={chan:"",bot:false,cmds:"!заказ,!sr,!order",maxq:2,cd:30,clean:true,copy:"names",fxBg:true,fxBurst:true,ovq:true,snd:"panel",blind:false,banNicks:"",banWords:"",conf:true,sndVol:25,room:"",maxMin:8,lenSkip:true,compact:false,scrAudio:false,scrW:880,ovChat:true,chatUrl:"",chatRev:0,chX:0,chY:0,chW:520,chH:560,ovFx:true,ovLogo:true,accent:"",scale:100,hideStats:false,hideHist:false,hideKbd:false,donWord:"донат",tagList:"🔥 Качает, 💤 Скучный, 😄 Весёлый, 😢 Грустный, 😎 Прикольный, 👎 Не очень, ⚖️ 50/50",qpList:"Добавлен в плейлист, Прикольный, Мимо, Не зацепило",lite:false,mode:"dark"};
 try{Object.assign(cfg,JSON.parse(ls.get(CFGK)||"{}"))}catch(e){}
 const cfgSave=()=>ls.set(CFGK,JSON.stringify(cfg));
 function chanName(v){v=String(v||"").trim().toLowerCase();const m=v.match(/twitch\.tv\/(?:popout\/)?([a-z0-9_]+)/);if(m)v=m[1];return v.replace(/^[#@]/,"").replace(/[^a-z0-9_]/g,"")}
-cfg.chan=chanName(cfg.chan||"m1z_qq");if(!cfg.room){cfg.room=Math.random().toString(36).slice(2,12);cfgSave()}
-function applyCfg(){document.documentElement.dataset.mode=cfg.mode==="auto"?(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"):cfg.mode==="light"?"light":"dark";document.documentElement.dataset.fx=cfg.fxBg?"on":"off";document.documentElement.dataset.compact=cfg.compact?"on":"off";document.documentElement.dataset.lite=cfg.lite?"on":"off";$("bl").style.display=cfg.blind?"":"none"}
+parseLists();cfg.chan=chanName(cfg.chan||"m1z_qq");if(!cfg.room){cfg.room=Math.random().toString(36).slice(2,12);cfgSave()}
+function applyCfg(){document.documentElement.dataset.mode=cfg.mode==="auto"?(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"):cfg.mode==="light"?"light":"dark";document.documentElement.dataset.fx=cfg.fxBg?"on":"off";document.documentElement.dataset.compact=cfg.compact?"on":"off";document.documentElement.dataset.lite=cfg.lite?"on":"off";
+  {const H=document.documentElement;H.dataset.hs=cfg.hideStats?"on":"off";H.dataset.hh=cfg.hideHist?"on":"off";H.dataset.hk=cfg.hideKbd?"on":"off";
+   if(/^#[0-9a-f]{6}$/i.test(cfg.accent||"")){H.style.setProperty("--ac",cfg.accent);H.style.setProperty("--ac2","color-mix(in srgb,"+cfg.accent+" 62%,#fff)")}else{H.style.removeProperty("--ac");H.style.removeProperty("--ac2")}
+   document.body.style.zoom=cfg.scale&&cfg.scale!==100?Math.max(70,Math.min(140,cfg.scale))/100:"";
+   parseLists();try{renderTags()}catch(e){}try{chatUi()}catch(e){}}
+  $("bl").style.display=cfg.blind?"":"none"}
 /* clean names for playlist */
 function cleanTitle(t){
   t=String(t||"");if(!cfg.clean)return t.trim();
@@ -600,7 +712,7 @@ function onChat(tags,login,msg){
 /* settings UI */
 $("tgrid").innerHTML=THEMES.map(([k,n,g])=>`<button class="tc" data-t="${k}"><div class="pv" style="background:${g}"></div><span>${n}</span></button>`).join("");
 $("tgrid").onclick=e=>{const b=e.target.closest(".tc");if(b)setTheme(b.dataset.t)};
-[["c-chan","chan","s"],["c-bot","bot","b"],["c-cmds","cmds","s"],["c-maxq","maxq","n"],["c-cd","cd","n"],["c-maxmin","maxMin","n"],["c-lenskip","lenSkip","b"],["c-compact","compact","b"],["c-lite","lite","b"],["c-mode","mode","s"],["c-clean","clean","b"],["c-copy","copy","s"],["c-fxbg","fxBg","b"],["c-fxb","fxBurst","b"],["c-ovq","ovq","b"],["c-sndv","sndVol","n"],["c-snd","snd","s"],["c-blind","blind","b"],["c-bann","banNicks","s"],["c-banw","banWords","s"],["c-conf","conf","b"]].forEach(([id,k,ty])=>{
+[["c-chan","chan","s"],["c-bot","bot","b"],["c-cmds","cmds","s"],["c-maxq","maxq","n"],["c-cd","cd","n"],["c-maxmin","maxMin","n"],["c-lenskip","lenSkip","b"],["c-compact","compact","b"],["c-lite","lite","b"],["c-ovchat","ovChat","b"],["c-churl","chatUrl","s"],["c-chx","chX","n"],["c-chy","chY","n"],["c-chw","chW","n"],["c-chh","chH","n"],["c-ovfx","ovFx","b"],["c-ovlogo","ovLogo","b"],["c-accent","accent","s"],["c-scale","scale","n"],["c-hs","hideStats","b"],["c-hh","hideHist","b"],["c-hk","hideKbd","b"],["c-don","donWord","s"],["c-tags","tagList","s"],["c-qp","qpList","s"],["c-scrw","scrW","n"],["c-scra","scrAudio","b"],["c-mode","mode","s"],["c-clean","clean","b"],["c-copy","copy","s"],["c-fxbg","fxBg","b"],["c-fxb","fxBurst","b"],["c-ovq","ovq","b"],["c-sndv","sndVol","n"],["c-snd","snd","s"],["c-blind","blind","b"],["c-bann","banNicks","s"],["c-banw","banWords","s"],["c-conf","conf","b"]].forEach(([id,k,ty])=>{
   const el=$(id);if(ty==="b")el.checked=!!cfg[k];else el.value=cfg[k];
   el.onchange=()=>{cfg[k]=ty==="b"?el.checked:ty==="n"?+el.value:el.value.trim();if(k==="chan"){cfg.chan=chanName(el.value);el.value=cfg.chan}cfgSave();applyCfg();bcast();
     if(k==="chan"||k==="bot")twConnect();if(k==="blind"){renderNow(false);renderLists()}
@@ -609,8 +721,18 @@ $("tgrid").onclick=e=>{const b=e.target.closest(".tc");if(b)setTheme(b.dataset.t
 $("gear").onclick=()=>$("modal").classList.add("open");
 $("mclose").onclick=()=>$("modal").classList.remove("open");
 $("modal").onclick=e=>{if(e.target===$("modal"))$("modal").classList.remove("open")};
-const ovQ=()=>"room="+cfg.room+(cfg.ovq?"":"&q=0")+(cfg.chan?"&chan="+encodeURIComponent(cfg.chan):"");
+const ovQ=()=>"room="+cfg.room+(cfg.ovq?"":"&q=0")+(cfg.lite?"&lite=1":"")+(cfg.ovLogo===false?"&logo=0":"")+"&sw="+Math.max(400,Math.min(1700,cfg.scrW||880));
 const ovLink=()=>location.origin+"/overlay.html?"+ovQ();
+$("ov-scr").onclick=scrToggle;
+function chatUi(){const on=cfg.ovChat!==false,b=$("chbtn"),c=$("c-ovchat");if(b){b.classList.toggle("on",on);b.title="Чат в оверлее: "+(on?"показан":"убран")+" (C)"}if(c)c.checked=on}
+function chatToggle(){cfg.ovChat=cfg.ovChat===false;cfgSave();chatUi();bcast();toast(cfg.ovChat?"💬 Чат в оверлее показан":"💬 Чат в оверлее убран")}
+$("chbtn").onclick=chatToggle;
+$("c-accent").value=/^#[0-9a-f]{6}$/i.test(cfg.accent||"")?cfg.accent:"#ff3341";
+$("ac-rst").onclick=()=>{cfg.accent="";$("c-accent").value="#ff3341";cfgSave();applyCfg();bcast();toast("Цвет акцента: по теме")};
+$("tg-rst").onclick=()=>{cfg.tagList=TAG_DEF;cfg.qpList=QP_DEF;$("c-tags").value=TAG_DEF;$("c-qp").value=QP_DEF;cfgSave();applyCfg();toast("Списки возвращены")};
+$("c-churl").addEventListener("change",e=>{const v=e.target.value.trim();if(v&&!/^https:\/\//i.test(v)){toast("Нужна ссылка, начинающаяся с https://");cfg.chatUrl="";e.target.value="";cfgSave();bcast();return}cfg.chatUrl=v;cfg.chatRev=(cfg.chatRev||0)+1;cfgSave();bcast();toast(v?"Чат в оверлее: новая ссылка ✓":"Чат в оверлее: стандартный")});
+$("ch-ref").onclick=()=>{cfg.chatRev=(cfg.chatRev||0)+1;cfgSave();bcast();toast("Чат в оверлее обновлён ✓")};
+$("ch-rst").onclick=()=>{cfg.chatUrl="";$("c-churl").value="";cfg.chatRev=(cfg.chatRev||0)+1;cfgSave();bcast();toast("Чат в оверлее: стандартный")};
 $("ov-copy").onclick=async()=>{try{await navigator.clipboard.writeText(ovLink());toast("Ссылка скопирована ✓")}catch(e){toast(ovLink())}};
 $("ov-win").onclick=()=>window.open("/overlay.html?bg=green&"+ovQ(),"m1z_overlay","width=980,height=420");
 $("d-exp").onclick=()=>{const b=new Blob([JSON.stringify({S,cfg:(({ytKey,...r})=>r)(cfg),arch:(()=>{try{return JSON.parse(ls.get("m1z_arch")||"[]")}catch(e){return[]}})()},null,1)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="m1z-backup.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
@@ -640,7 +762,7 @@ $("t-j").onclick=()=>window.SFX&&SFX.jingle();$("t-a").onclick=()=>window.SFX&&S
 const plItems=()=>[S.current,...S.history].filter(x=>x&&x.pl);
 const splitN=x=>{const n=plName(x),m=n.match(/^(.+?)\s[–-]\s(.+)$/);return isUrl(n)?["",n]:m?[m[1],m[2]]:["",n]};
 function fit(g,t,w){if(g.measureText(t).width<=w)return t;while(t.length>1&&g.measureText(t+"…").width>w)t=t.slice(0,-1);return t+"…"}
-const STORY_PAL={m1z:["#ff3341","#e9e9ee","#09090a"],neon:["#ff2bd6","#00e5ff","#1a0938"],space:["#7c9cff","#c39bff","#0a102a"],lagoon:["#2fe3b0","#6ad6ff","#062c2a"],sakura:["#ff7eb6","#ffc2dd","#2c1322"],matrix:["#00ff7f","#b6ff5e","#02140a"],retro:["#b79cff","#8c6bff","#0e0a16"],volcano:["#ff3b3b","#ff9a8a","#280a0a"],platinum:["#e4e8f0","#b4bdd0","#14161e"],stage:["#ffe11a","#fff59a","#221c06"]};
+const STORY_PAL={m1z:["#ff3341","#e9e9ee","#09090a"],neon:["#ff2bd6","#00e5ff","#1a0938"],space:["#7c9cff","#c39bff","#0a102a"],lagoon:["#2fe3b0","#6ad6ff","#062c2a"],sakura:["#ff7eb6","#ffc2dd","#2c1322"],matrix:["#00ff7f","#b6ff5e","#02140a"],retro:["#b79cff","#8c6bff","#0e0a16"],volcano:["#ff3b3b","#ff9a8a","#280a0a"],platinum:["#e4e8f0","#b4bdd0","#14161e"],stage:["#ffe11a","#fff59a","#221c06"],aurora:["#4dffb0","#8f7bff","#04141b"],sunset:["#ff8a5c","#ffd36b","#3a1148"],frost:["#7fdcff","#d4f1ff","#0b2233"],toxic:["#c6ff00","#00ffa3","#050804"],gold:["#f5c451","#fff0b3","#0b0804"]};
 let photoImg=null,storyArgs=null,sumTag="";
 function loadPhoto(){const u=ls.get("m1z_photo");if(!u){photoImg=null;return}const im=new Image();im.onload=()=>{photoImg=im;if(storyArgs)drawStory(...storyArgs)};im.src=u}
 function drawStory(top,avg,n,all,cur){
@@ -680,7 +802,7 @@ function openSum(){
   $("sbody").innerHTML=`<div class="stats" style="margin:10px 0">Оценено: <b>${rt.length}</b> из ${all.length} · Средняя: <b>${rt.length?avg.toFixed(1):"–"}</b></div>
   ${sparkSvg(rt.slice().reverse().map(x=>x.rating))}
   ${dd.length?`<div class="hint">Самый длинный: <b>${esc(plName(dd[dd.length-1]))}</b> (${fmt(dd[dd.length-1].dur)}) · самый короткий: <b>${esc(plName(dd[0]))}</b> (${fmt(dd[0].dur)})</div>`:""}
-  <div class="row" style="margin:10px 0"><select id="s-tag"><option value="">Хит-парад: все теги</option>${TAGS.map(([e,t])=>`<option value="${t}"${sumTag===t?" selected":""}>${e} ${t}</option>`).join("")}</select><button data-all="30">🗓 За 30 дней</button><button data-all="0">🗓 За всё время</button></div>
+  <div class="row" style="margin:10px 0"><select id="s-tag"><option value="">Хит-парад: все теги</option>${TAGS.map(([e,t])=>`<option value="${esc(t)}"${sumTag===t?" selected":""}>${esc(e)} ${esc(t)}</option>`).join("")}</select><button data-all="30">🗓 За 30 дней</button><button data-all="0">🗓 За всё время</button></div>
   <h3>Хит-парад вечера</h3><table class="tbl"><tr><th></th><th>Трек</th><th>Ник</th><th>Чат</th><th>Оценка</th></tr>${top.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(plName(x))}${x.tags&&x.tags.length?" <small>"+esc(x.tags.join(", "))+"</small>":""}</td><td>@${esc(x.nick)}</td><td>${x.vn?x.vavg+" ("+x.vn+")":"–"}</td><td style="color:${col(x.rating)};font-weight:800">${x.rating}</td></tr>`).join("")||"<tr><td colspan=5>Нет оценок"+(sumTag?" с тегом «"+esc(sumTag)+"»":"")+"</td></tr>"}</table>
   <h3>Любимчики ведущего</h3><table class="tbl"><tr><th>Ник</th><th>Треков</th><th>Средняя оценка</th></tr>${fav.map(f=>`<tr><td>@${esc(f[0])}</td><td>${f[1]}</td><td style="color:${col(Math.round(f[2]))};font-weight:800">${f[2].toFixed(1)}</td></tr>`).join("")||"<tr><td colspan=3>Пока нет оценок</td></tr>"}</table>
   <h3>Кураторы вечера (треков с оценкой 8+)</h3><table class="tbl">${curators.map(c=>`<tr><td>@${esc(c[0])}</td><td style="font-weight:800">${c[1]}</td></tr>`).join("")||"<tr><td>Пока нет</td></tr>"}</table>`;
@@ -704,16 +826,18 @@ function openAll(days){
 }
 
 function updVotes(){const c=S.current;if(!c)return;const v=Object.values(votes);c.vn=v.length;c.vavg=v.length?+(v.reduce((a,x)=>a+x,0)/v.length).toFixed(1):null;save();renderNow(false)}
-function brkUi(){ls.set("m1z_brk",JSON.stringify(brk));$("brk").classList.toggle("on",brk.on&&brk.kind!=="soon");$("soon").classList.toggle("on",brk.on&&brk.kind==="soon")}
+function brkUi(){ls.set("m1z_brk",JSON.stringify(brk));$("brk").classList.toggle("on",brk.on&&brk.kind==="break");$("soon").classList.toggle("on",brk.on&&brk.kind==="soon");$("fin").classList.toggle("on",brk.on&&brk.kind==="end")}
 function brkToggle(kind){
   if(brk.on&&brk.kind===kind){brk={on:false,until:0};brkUi();bcast();toast("Заставка выключена");return}
+  if(kind==="end"){brk={on:true,until:0,kind:"end"};brkUi();bcast();toast("🏁 Конец стрима: итоги вечера в оверлее");return}
   const v=prompt(kind==="soon"?"Через сколько минут начнём? (пусто — без таймера)":"На сколько минут перерыв? (пусто — без таймера)","5");if(v===null)return;
   const m=parseFloat(String(v).replace(",","."));brk={on:true,until:m>0?Date.now()+m*60000:0,kind};brkUi();bcast();toast(kind==="soon"?"⏳ «Скоро начнём» в оверлее":"☕ Перерыв в оверлее")}
-$("brk").onclick=()=>brkToggle("break");$("soon").onclick=()=>brkToggle("soon");$("t-f").onclick=()=>window.SFX&&SFX.fail();matchMedia("(prefers-color-scheme: light)").addEventListener&&matchMedia("(prefers-color-scheme: light)").addEventListener("change",applyCfg);
+$("brk").onclick=()=>brkToggle("break");$("soon").onclick=()=>brkToggle("soon");$("fin").onclick=()=>brkToggle("end");$("t-f").onclick=()=>window.SFX&&SFX.fail();matchMedia("(prefers-color-scheme: light)").addEventListener&&matchMedia("(prefers-color-scheme: light)").addEventListener("change",applyCfg);
 document.addEventListener("click",e=>{
   const tg=e.target.closest("[data-tag]");if(tg&&S.current){const c=S.current,a=c.tags||(c.tags=[]),t=tg.dataset.tag,i=a.indexOf(t);if(i>-1)a.splice(i,1);else a.push(t);save();renderTags();return}
   const qp=e.target.closest("[data-qp]");if(qp&&S.current){const c=S.current;c.note=(c.note?c.note+", ":"")+qp.dataset.qp;$("note").value=c.note;save();return}
-  const vp=e.target.closest("[data-vip]");if(vp){const i=S.queue.findIndex(q=>String(q.id)===vp.dataset.vip);if(i>-1){const it=S.queue[i];if(it.vip)delete it.vip;else{it.vip=true;S.queue.splice(i,1);S.queue.splice(S.queue.filter(q=>q.vip).length,0,it)}save();renderLists()}return}
+  const dn=e.target.closest("[data-don]");if(dn){const it=S.queue.find(q=>String(q.id)===dn.dataset.don);if(it){if(it.don)delete it.don;else donFront(it);save();renderLists()}return}
+  const vp=e.target.closest("[data-vip]");if(vp){const i=S.queue.findIndex(q=>String(q.id)===vp.dataset.vip);if(i>-1){const it=S.queue[i];if(it.vip)delete it.vip;else{it.vip=true;S.queue.splice(i,1);S.queue.splice(S.queue.filter(q=>q.vip||q.don).length,0,it)}save();renderLists()}return}
   if(e.target.closest("[data-clearall]")){if(clearAll())openAll(30);return}
   const al=e.target.closest("[data-all]");if(al){openAll(+al.dataset.all);return}
   if(e.target.closest("[data-back]"))openSum();
@@ -734,7 +858,36 @@ $("s-png").onclick=()=>$("sc").toBlob(b=>{const a=document.createElement("a");a.
 $("x-copy").onclick=async()=>{try{await navigator.clipboard.writeText(plItems().map(plOut).join("\n"));toast("Скопировано ✓")}catch(e){toast("Не удалось скопировать")}};
 $("x-csv").onclick=()=>{const q=v=>'"'+String(v).replace(/"/g,'""')+'"',rows=[["Artist","Title","Link"],...plItems().map(x=>[...splitN(x),x.text])],b=new Blob(["\ufeff"+rows.map(r=>r.map(q).join(",")).join("\n")],{type:"text/csv"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="m1z-playlist.csv";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
 /* синхронизация с оверлеем через WebRTC (PeerJS), не зависит от браузера/профиля */
-const pubState=()=>{const c=S.current;return{t:Date.now(),pos:(()=>{try{return player&&player.getCurrentTime&&c&&player.getVideoData().video_id===ytId(c.text)?player.getCurrentTime():0}catch(e){return 0}})(),play:!!playing,theme,blind:!!cfg.blind,dur:(()=>{try{return player&&c&&player.getVideoData().video_id===ytId(c.text)?(player.getDuration()||0):0}catch(e){return 0}})(),vote:c?{avg:c.vavg||null,n:c.vn||0,open:!c.rating}:null,brk:brk.on?{rem:brk.until?Math.max(0,brk.until-Date.now()):null,kind:brk.kind||"break"}:null,ev:(()=>{const r=[S.current,...S.history].filter(x=>x&&x.rating);return{cnt:r.length,avg:r.length?+(r.reduce((a,x)=>a+x.rating,0)/r.length).toFixed(1):null}})(),hist:S.history.filter(x=>x.rating).slice(0,5).map(x=>({n:plName(x),r:x.rating})),snd:cfg.snd,sndVol:cfg.sndVol,current:c?{id:c.id,text:c.text,name:c.name,title:c.title,nick:c.nick,rating:c.rating||null,thumb:c.thumb||"",t0:c.t0||0,cover:c.cover||"",noemb:!!c.noemb}:null,queue:S.queue.slice(0,5).map(x=>({id:x.id,text:x.text,nick:x.nick}))}};
+/* показ вкладки браузера в оверлее: getDisplayMedia -> WebRTC call -> окно клипа (клавиша V) */
+let scrOn=false,scrStream=null,scrCalls=[];
+function scrUi(){const b=$("ov-scr");if(b){b.textContent=scrOn?"⏹ Остановить показ вкладки":"📺 Показать мою вкладку";b.classList.toggle("on",scrOn)}}
+/* поднимаем потолок битрейта в SDP, иначе браузер держит картинку мыльной */
+const scrSdp=sdp=>{try{const br=cfg.lite?2500:8000;return sdp.replace(/(m=video[^\r\n]*\r\n)((?:[^m][^\r\n]*\r\n)*)/,(a,h,b)=>h+(/^c=/m.test(b)?b.replace(/(c=[^\r\n]*\r\n)/,"$1b=AS:"+br+"\r\n"):"b=AS:"+br+"\r\n"+b))}catch(e){return sdp}};
+function scrCall(c){
+  if(!scrOn||!scrStream||!peer||!c||!c.peer)return;
+  try{
+    const m=peer.call(c.peer,scrStream,{sdpTransform:scrSdp});if(!m)return;scrCalls.push(m);
+    m.on("close",()=>{scrCalls=scrCalls.filter(x=>x!==m)});m.on("error",()=>{});
+    const tune=()=>{try{m.peerConnection.getSenders().forEach(s=>{if(s.track&&s.track.kind==="video"){const p=s.getParameters();p.encodings=p.encodings&&p.encodings.length?p.encodings:[{}];p.encodings[0].maxBitrate=cfg.lite?2.5e6:8e6;p.encodings[0].maxFramerate=cfg.lite?20:30;p.encodings[0].scaleResolutionDownBy=1;p.degradationPreference="maintain-resolution";s.setParameters(p).catch(()=>{})}})}catch(e){}};
+    [1200,3500,8000].forEach(t=>setTimeout(tune,t));
+  }catch(e){}
+}
+function scrStop(quiet){
+  scrOn=false;try{scrStream&&scrStream.getTracks().forEach(t=>t.stop())}catch(e){}
+  scrStream=null;scrCalls.forEach(m=>{try{m.close()}catch(e){}});scrCalls=[];
+  scrUi();bcast();if(!quiet)toast("Показ вкладки выключен");
+}
+async function scrStart(){
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getDisplayMedia){toast("Браузер не умеет показывать вкладку (нужен Chrome или Edge)");return}
+  try{
+    const st=await navigator.mediaDevices.getDisplayMedia({video:cfg.lite?{frameRate:{ideal:20,max:24},width:{ideal:1280,max:1280},height:{ideal:720,max:720}}:{frameRate:{ideal:30,max:30},width:{ideal:1920,max:1920},height:{ideal:1080,max:1080}},audio:!!cfg.scrAudio,selfBrowserSurface:"exclude"});
+    scrStream=st;scrOn=true;
+    const vt=st.getVideoTracks()[0];if(vt){try{vt.contentHint="detail"}catch(e){}vt.onended=()=>{if(scrOn)scrStop()}}
+    conns=conns.filter(c=>c.open);conns.forEach(scrCall);scrUi();bcast();toast("Вкладка показывается в оверлее ✓");
+  }catch(e){toast("Показ вкладки отменён")}
+}
+function scrToggle(){return scrOn?scrStop():scrStart()}
+const pubState=()=>{const c=S.current;return{t:Date.now(),pos:(()=>{try{return player&&player.getCurrentTime&&c&&player.getVideoData().video_id===ytId(c.text)?player.getCurrentTime():0}catch(e){return 0}})(),play:!!playing,scr:!!scrOn,theme,blind:!!cfg.blind,dur:(()=>{try{return player&&c&&player.getVideoData().video_id===ytId(c.text)?(player.getDuration()||0):0}catch(e){return 0}})(),vote:c?{avg:c.vavg||null,n:c.vn||0,open:!c.rating}:null,brk:brk.on?{rem:brk.until?Math.max(0,brk.until-Date.now()):null,kind:brk.kind||"break"}:null,ev:(()=>{const r=[S.current,...S.history].filter(x=>x&&x.rating);return{cnt:r.length,avg:r.length?+(r.reduce((a,x)=>a+x.rating,0)/r.length).toFixed(1):null,pl:r.filter(x=>x.pl).length,top:[...r].sort((a,b)=>b.rating-a.rating).slice(0,5).map(x=>({n:plName(x),r:x.rating}))}})(),hist:S.history.filter(x=>x.rating).slice(0,5).map(x=>({n:plName(x),r:x.rating})),snd:cfg.snd,sndVol:cfg.sndVol,chatUrl:cfg.chatUrl||"",chatRev:cfg.chatRev||0,chatBox:{x:cfg.chX,y:cfg.chY,w:cfg.chW,h:cfg.chH},ovFx:cfg.ovFx!==false,accent:/^#[0-9a-f]{6}$/i.test(cfg.accent||"")?cfg.accent:"",chatOn:cfg.ovChat!==false,current:c?{id:c.id,text:c.text,name:c.name,title:c.title,nick:c.nick,rating:c.rating||null,thumb:c.thumb||"",t0:c.t0||0,cover:c.cover||"",noemb:!!c.noemb}:null,queue:S.queue.slice(0,5).map(x=>({id:x.id,text:x.text,nick:x.nick,don:!!x.don}))}};
 function bcast(){try{conns=conns.filter(c=>c.open);if(!conns.length)return;const m=pubState();conns.forEach(c=>c.send(m))}catch(e){}}
 function ovSt(){const n=conns.filter(c=>c.open).length,e=$("ov-st");if(!e)return;e.textContent=peerErr||(n?"оверлей подключён"+(n>1?" ("+n+")":""):"ждёт оверлей");$("ov-dot").className="dot"+(n&&!peerErr?" ok":"")}
 function peerStart(){
@@ -742,7 +895,7 @@ function peerStart(){
   if(!window.Peer){peerErr="нет связи с сервером синхронизации";ovSt();return}
   try{if(peer&&!peer.destroyed)peer.destroy();conns=[];peer=new Peer("m1zfm-"+cfg.room);
     peer.on("open",()=>{peerErr="";ovSt()});
-    peer.on("connection",c=>{c.on("open",()=>{conns.push(c);try{c.send(pubState())}catch(e){}ovSt()});const gone=()=>{conns=conns.filter(x=>x!==c);ovSt()};c.on("close",gone);c.on("error",gone)});
+    peer.on("connection",c=>{c.on("open",()=>{conns.push(c);try{c.send(pubState())}catch(e){}scrCall(c);ovSt()});const gone=()=>{conns=conns.filter(x=>x!==c);ovSt()};c.on("close",gone);c.on("error",gone)});
     peer.on("disconnected",()=>{try{peer.reconnect()}catch(e){}});
     peer.on("error",e=>{peerErr=e.type==="unavailable-id"?"комната занята: закрой другие вкладки панели":"ошибка связи ("+e.type+")";ovSt();peerT=setTimeout(peerStart,5000)});
   }catch(e){peerErr="ошибка запуска синхронизации";ovSt()}
@@ -785,6 +938,7 @@ $("stage").addEventListener("click",e=>{
   const c=S.current;if(!c)return;
   if(e.target.closest("[data-retry]")){c.noemb=false;save();renderStage();return}
   if(e.target.closest("[data-open]"))openTrack();
+  if(e.target.closest("[data-scr]")){openTrack();if(!scrOn)scrStart();else toast("Вкладка уже показывается: выбери в Chrome нужную")}
 });
 applyCfg();twConnect();peerStart();
 setTheme(theme);show();
@@ -858,7 +1012,6 @@ setTheme(theme);show();
   let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>{if(raf)init()},200)});
   upd();
 })();
-
 
 /* M1z: нарисованная «ухмылка» (каракули-неон) для темы M1z */
 (function(){

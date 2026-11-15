@@ -1,6 +1,6 @@
-/* HMSTR.FM — мягкие синтезированные звуки. Громкость: cfg.sndVol (0–100), по умолчанию 25 */
+/* M1Z.FM — мягкие синтезированные звуки. Громкость: cfg.sndVol (0–100), по умолчанию 25 */
 (function(){let A=null,M=null;
-const vol=()=>{if(typeof window.SFX_VOL==="number")return window.SFX_VOL/100;try{const v=JSON.parse(localStorage.getItem(window.SFX_KEY||"hmstr_cfg")).sndVol;return(v==null?25:v)/100}catch(e){return .25}};
+const vol=()=>{if(typeof window.SFX_VOL==="number")return window.SFX_VOL/100;try{const v=JSON.parse(localStorage.getItem(window.SFX_KEY||"m1z_cfg")).sndVol;return(v==null?25:v)/100}catch(e){return .25}};
 const ac=()=>{try{if(!A){A=new(window.AudioContext||window.webkitAudioContext)();const g=A.createGain(),f=A.createBiquadFilter(),c=A.createDynamicsCompressor();f.type="lowpass";f.frequency.value=2800;g.connect(f);f.connect(c);c.connect(A.destination);M=g}if(A.state==="suspended")A.resume();M.gain.value=vol()}catch(e){}return A};
 function tone(f,t,d,ty,g,f2,lp){const a=ac(),T=a.currentTime+t,o=a.createOscillator(),v=a.createGain();o.type=ty;o.frequency.setValueAtTime(f,T);if(f2)o.frequency.exponentialRampToValueAtTime(f2,T+d);
   v.gain.setValueAtTime(0,T);v.gain.linearRampToValueAtTime(g,T+.04);v.gain.setValueAtTime(g,T+d*.6);v.gain.exponentialRampToValueAtTime(.0001,T+d);
